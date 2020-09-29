@@ -27,13 +27,13 @@ public class TikaHtmlParser implements HtmlParser {
 
     private final CrawlerConfig config;
 
-    private final HtmlParser htmlParser;
+    private final org.apache.tika.parser.html.HtmlParser htmlParser;
     private final ParseContext parseContext;
 
     public TikaHtmlParser(CrawlerConfig config) throws InstantiationException, IllegalAccessException {
         this.config = config;
 
-        htmlParser = new HtmlParser();
+        htmlParser = new org.apache.tika.parser.html.HtmlParser();
         parseContext = new ParseContext();
         parseContext.set(HtmlMapper.class, AllTagMapper.class.newInstance());
     }

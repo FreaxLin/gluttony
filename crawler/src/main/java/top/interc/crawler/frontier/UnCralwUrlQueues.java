@@ -15,38 +15,15 @@
  * limitations under the License.
  */
 
-package top.interc.crawler.parser;
+package top.interc.crawler.frontier;
 
-import edu.uci.ics.crawler4j.url.WebURL;
 
-import java.util.HashSet;
-import java.util.Set;
+public class UnCralwUrlQueues {
 
-public class TextParseData implements ParseData {
+    private DocIDService docIDService;
 
-    private String textContent;
-    private Set<WebURL> outgoingUrls = new HashSet<>();
-
-    public String getTextContent() {
-        return textContent;
+    public UnCralwUrlQueues(DocIDService docIDService) {
+        this.docIDService = docIDService;
     }
 
-    public void setTextContent(String textContent) {
-        this.textContent = textContent;
-    }
-
-    @Override
-    public Set<WebURL> getOutgoingUrls() {
-        return outgoingUrls;
-    }
-
-    @Override
-    public void setOutgoingUrls(Set<WebURL> outgoingUrls) {
-        this.outgoingUrls = outgoingUrls;
-    }
-
-    @Override
-    public String toString() {
-        return textContent;
-    }
 }

@@ -17,8 +17,6 @@
 
 package top.interc.crawler;
 
-import com.google.common.net.InternetDomainName;
-
 
 import java.io.Serializable;
 import java.util.Map;
@@ -70,36 +68,36 @@ public class WebURL implements Serializable {
         String domain = url.substring(domainStartIdx, domainEndIdx);
         registeredDomain = domain;
         subDomain = "";
-        if (tldList != null && !(domain.isEmpty()) && InternetDomainName.isValid(domain)) {
-            String candidate = null;
-            String rd = null;
-            String sd = null;
-            String[] parts = domain.split("\\.");
-            for (int i = parts.length - 1; i >= 0; i--) {
-                if (rd == null) {
-                    if (candidate == null) {
-                        candidate = parts[i];
-                    } else {
-                        candidate = parts[i] + "." + candidate;
-                    }
-                    if (tldList.isRegisteredDomain(candidate)) {
-                        rd = candidate;
-                    }
-                } else {
-                    if (sd == null) {
-                        sd = parts[i];
-                    } else {
-                        sd = parts[i] + "." + sd;
-                    }
-                }
-            }
-            if (rd != null) {
-                registeredDomain = rd;
-            }
-            if (sd != null) {
-                subDomain = sd;
-            }
-        }
+//        if (tldList != null && !(domain.isEmpty()) && InternetDomainName.isValid(domain)) {
+//            String candidate = null;
+//            String rd = null;
+//            String sd = null;
+//            String[] parts = domain.split("\\.");
+//            for (int i = parts.length - 1; i >= 0; i--) {
+//                if (rd == null) {
+//                    if (candidate == null) {
+//                        candidate = parts[i];
+//                    } else {
+//                        candidate = parts[i] + "." + candidate;
+//                    }
+//                    if (tldList.isRegisteredDomain(candidate)) {
+//                        rd = candidate;
+//                    }
+//                } else {
+//                    if (sd == null) {
+//                        sd = parts[i];
+//                    } else {
+//                        sd = parts[i] + "." + sd;
+//                    }
+//                }
+//            }
+//            if (rd != null) {
+//                registeredDomain = rd;
+//            }
+//            if (sd != null) {
+//                subDomain = sd;
+//            }
+//        }
         path = url.substring(domainEndIdx);
         int pathEndIdx = path.indexOf('?');
         if (pathEndIdx >= 0) {
