@@ -1,0 +1,28 @@
+##############################
+## Folders                  ##
+##############################
+target
+.settings
+node_modules
+*.log
+*.log.*
+bin
+log
+
+##############################
+## project files            ##
+##############################
+vim.exe.stackdump
+.project
+.classpath
+.factorypath
+.idea
+*.iml
+*.pdb
+*.DS_Store
+
+dmaas-provider/src/main/resources/application-02.properties
+dmaas-provider/src/main/resources/application-01.properties
+dmaas-log/src/main/resources/application.properties
+dmaas-log/src/main/resources/application-dev.properties
+dmaas-log/pom.xml
