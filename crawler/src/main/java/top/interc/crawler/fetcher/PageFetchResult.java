@@ -17,12 +17,12 @@
 
 package top.interc.crawler.fetcher;
 
-import edu.uci.ics.crawler4j.crawler.Page;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import top.interc.crawler.controller.Page;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;

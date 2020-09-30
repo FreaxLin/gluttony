@@ -17,20 +17,13 @@
 
 package top.interc.crawler.controller;
 
-import com.sleepycat.je.Environment;
-import com.sleepycat.je.EnvironmentConfig;
-import edu.uci.ics.crawler4j.fetcher.PageFetcher;
-import edu.uci.ics.crawler4j.frontier.DocIDServer;
-import edu.uci.ics.crawler4j.frontier.Frontier;
-import edu.uci.ics.crawler4j.parser.Parser;
-import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
-import edu.uci.ics.crawler4j.url.TLDList;
-import edu.uci.ics.crawler4j.url.URLCanonicalizer;
-import edu.uci.ics.crawler4j.url.WebURL;
-import edu.uci.ics.crawler4j.util.IO;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import top.interc.crawler.utils.URLCanonicalizer;
+import top.interc.crawler.fetcher.PageFetcher;
+import top.interc.crawler.frontier.DocIDService;
+import top.interc.crawler.frontier.Frontier;
+import top.interc.crawler.url.URLCanonicalizer;
 
 import java.io.File;
 import java.io.IOException;
@@ -60,17 +53,15 @@ public class CrawlController {
     protected boolean shuttingDown;
 
     protected PageFetcher pageFetcher;
-    protected RobotstxtServer robotstxtServer;
+//    protected RobotstxtServer robotstxtServer;
     protected Frontier frontier;
-    protected DocIDServer docIdServer;
-    protected TLDList tldList;
+    protected DocIDService docIdServer;
 
     protected final Object waitingLock = new Object();
-    protected final Environment env;
 
-    protected Parser parser;
+//    protected Parser parser;
 
-    public CrawlController(CrawlConfig config, PageFetcher pageFetcher,
+    public CrawlController(CrawlerConfig config, PageFetcher pageFetcher,
                            RobotstxtServer robotstxtServer) throws Exception {
         this(config, pageFetcher, null, robotstxtServer, null);
     }

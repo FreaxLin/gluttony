@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package top.interc.crawler.utils;
+package top.interc.crawler.url;
 
 import java.io.UnsupportedEncodingException;
 import java.net.*;

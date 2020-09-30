@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package top.interc.crawler.utils;
+package top.interc.crawler.url;
 
 public final class UrlResolver {
 

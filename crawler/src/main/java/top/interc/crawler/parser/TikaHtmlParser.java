@@ -12,7 +12,7 @@ import top.interc.crawler.WebURL;
 import top.interc.crawler.controller.CrawlerConfig;
 import top.interc.crawler.controller.Page;
 import top.interc.crawler.exceptions.ParseException;
-import top.interc.crawler.utils.URLCanonicalizer;
+import top.interc.crawler.url.URLCanonicalizer;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

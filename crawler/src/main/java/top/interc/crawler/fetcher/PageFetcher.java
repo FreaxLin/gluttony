@@ -53,6 +53,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.ssl.SSLContexts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import top.interc.crawler.WebURL;
 import top.interc.crawler.controller.CrawlerConfig;
 
 import javax.net.ssl.SSLContext;
