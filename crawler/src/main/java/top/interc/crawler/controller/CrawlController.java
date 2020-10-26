@@ -132,9 +132,9 @@ public class CrawlController {
      *            this crawling session.
      * @param <T> Your class extending WebCrawler
      */
-    public <T extends WebCrawler> void start(Class<T> clazz, int numberOfCrawlers) {
-        this.start(new DefaultWebCrawlerFactory<>(clazz), numberOfCrawlers, true);
-    }
+//    public <T extends WebCrawler> void start(Class<T> clazz, int numberOfCrawlers) {
+//        this.start(new DefaultWebCrawlerFactory<>(clazz), numberOfCrawlers, true);
+//    }
 
 
     /**
@@ -167,20 +167,9 @@ public class CrawlController {
         this.start(crawlerFactory, numberOfCrawlers, false);
     }
 
-    /**
-     * Start the crawling session and return immediately.
-     * This method utilizes default crawler factory that creates new crawler using Java reflection
-     *
-     * @param clazz
-     *            the class that implements the logic for crawler threads
-     * @param numberOfCrawlers
-     *            the number of concurrent threads that will be contributing in
-     *            this crawling session.
-     * @param <T> Your class extending WebCrawler
-     */
-    public <T extends WebCrawler> void startNonBlocking(Class<T> clazz, int numberOfCrawlers) {
-        start(new DefaultWebCrawlerFactory<>(clazz), numberOfCrawlers, false);
-    }
+//    public <T extends WebCrawler> void startNonBlocking(Class<T> clazz, int numberOfCrawlers) {
+//        start(new DefaultWebCrawlerFactory<>(clazz), numberOfCrawlers, false);
+//    }
 
     protected <T extends WebCrawler> void start(final WebCrawlerFactory<T> crawlerFactory,
                                                 final int numberOfCrawlers, boolean isBlocking) {
@@ -545,5 +534,9 @@ public class CrawlController {
 
     public void setDocIdServer(DocIDService docIdServer) {
         this.docIdServer = docIdServer;
+    }
+
+    public interface WebCrawlerFactory<T extends WebCrawler> {
+        T newInstance() throws Exception;
     }
 }
