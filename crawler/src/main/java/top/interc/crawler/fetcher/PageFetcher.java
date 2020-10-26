@@ -17,14 +17,7 @@
 
 package top.interc.crawler.fetcher;
 
-import edu.uci.ics.crawler4j.crawler.CrawlConfig;
-import edu.uci.ics.crawler4j.crawler.authentication.AuthInfo;
-import edu.uci.ics.crawler4j.crawler.authentication.BasicAuthInfo;
-import edu.uci.ics.crawler4j.crawler.authentication.FormAuthInfo;
-import edu.uci.ics.crawler4j.crawler.authentication.NtAuthInfo;
-import edu.uci.ics.crawler4j.crawler.exceptions.PageBiggerThanMaxSizeException;
-import edu.uci.ics.crawler4j.url.URLCanonicalizer;
-import edu.uci.ics.crawler4j.url.WebURL;
+
 import org.apache.http.*;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.Credentials;
@@ -53,8 +46,14 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.ssl.SSLContexts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import top.interc.crawler.WebURL;
+import top.interc.crawler.controller.authentication.AuthInfo;
+import top.interc.crawler.controller.authentication.BasicAuthInfo;
+import top.interc.crawler.controller.authentication.FormAuthInfo;
+import top.interc.crawler.controller.authentication.NtAuthInfo;
+import top.interc.crawler.url.WebURL;
 import top.interc.crawler.controller.CrawlerConfig;
+import top.interc.crawler.exceptions.PageBiggerThanMaxSizeException;
+import top.interc.crawler.url.URLCanonicalizer;
 
 import javax.net.ssl.SSLContext;
 import java.io.IOException;
@@ -341,7 +340,7 @@ public class PageFetcher {
         return new HttpGet(url);
     }
 
-    protected CrawlConfig getConfig() {
+    protected CrawlerConfig getConfig() {
         return config;
     }
 }

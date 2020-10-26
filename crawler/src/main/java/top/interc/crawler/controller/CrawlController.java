@@ -23,14 +23,17 @@ import org.slf4j.LoggerFactory;
 import top.interc.crawler.fetcher.PageFetcher;
 import top.interc.crawler.frontier.DocIDService;
 import top.interc.crawler.frontier.Frontier;
+import top.interc.crawler.frontier.MapDBDocIDBase;
+import top.interc.crawler.parser.Parser;
+import top.interc.crawler.robotstxt.RobotstxtServer;
 import top.interc.crawler.url.URLCanonicalizer;
+import top.interc.crawler.url.WebURL;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 
 public class CrawlController {
@@ -39,40 +42,35 @@ public class CrawlController {
 
     private final CrawlerConfig config;
 
-
     protected Object customData;
 
-
-    protected List<Object> crawlersLocalData = new ArrayList<>();
-
-
     protected boolean finished;
+
     private Throwable error;
 
+    private Frontier frontier;
 
     protected boolean shuttingDown;
 
     protected PageFetcher pageFetcher;
-//    protected RobotstxtServer robotstxtServer;
-    protected Frontier frontier;
+
+    protected RobotstxtServer robotstxtServer;
+
     protected DocIDService docIdServer;
 
     protected final Object waitingLock = new Object();
 
-//    protected Parser parser;
+    protected Parser parser;
 
     public CrawlController(CrawlerConfig config, PageFetcher pageFetcher,
                            RobotstxtServer robotstxtServer) throws Exception {
-        this(config, pageFetcher, null, robotstxtServer, null);
+        this(config, pageFetcher, null, robotstxtServer);
     }
 
-    public CrawlController(CrawlConfig config, PageFetcher pageFetcher,
-                           RobotstxtServer robotstxtServer, TLDList tldList) throws Exception {
-        this(config, pageFetcher, null, robotstxtServer, tldList);
-    }
 
-    public CrawlController(CrawlConfig config, PageFetcher pageFetcher, Parser parser,
-                           RobotstxtServer robotstxtServer, TLDList tldList) throws Exception {
+
+    public CrawlController(CrawlerConfig config, PageFetcher pageFetcher, Parser parser,
+                           RobotstxtServer robotstxtServer) throws Exception {
         config.validate();
         this.config = config;
 
@@ -87,16 +85,11 @@ public class CrawlController {
             }
         }
 
-        this.tldList = tldList == null ? new TLDList(config) : tldList;
+
         URLCanonicalizer.setHaltOnError(config.isHaltOnError());
 
         boolean resumable = config.isResumableCrawling();
 
-        EnvironmentConfig envConfig = new EnvironmentConfig();
-        envConfig.setAllowCreate(true);
-        envConfig.setTransactional(resumable);
-        envConfig.setLocking(resumable);
-        envConfig.setLockTimeout(config.getDbLockTimeout(), TimeUnit.MILLISECONDS);
 
         File envHome = new File(config.getCrawlStorageFolder() + "/frontier");
         if (!envHome.exists()) {
@@ -109,18 +102,16 @@ public class CrawlController {
         }
 
         if (!resumable) {
-            IO.deleteFolderContents(envHome);
+//            PolicyUtils.IO.deleteFolderContents(envHome);
             logger.info("Deleted contents of: " + envHome +
                         " ( as you have configured resumable crawling to false )");
         }
 
-        env = new Environment(envHome, envConfig);
-        docIdServer = new DocIDServer(env, config);
-        frontier = new Frontier(env, config);
+        docIdServer = new MapDBDocIDBase(config);
 
         this.pageFetcher = pageFetcher;
-        this.parser = parser == null ? new Parser(config, tldList) : parser;
-        this.robotstxtServer = robotstxtServer;
+//        this.parser = parser == null ? new Parser(config, tldList) : parser;
+//        this.robotstxtServer = robotstxtServer;
 
         finished = false;
         shuttingDown = false;
@@ -128,46 +119,7 @@ public class CrawlController {
         robotstxtServer.setCrawlConfig(config);
     }
 
-    public Parser getParser() {
-        return parser;
-    }
 
-    public interface WebCrawlerFactory<T extends WebCrawler> {
-        T newInstance() throws Exception;
-    }
-
-    private static class SingleInstanceFactory<T extends WebCrawler>
-        implements WebCrawlerFactory<T> {
-
-        final T instance;
-
-        SingleInstanceFactory(T instance) {
-            this.instance = instance;
-        }
-
-        @Override
-        public T newInstance() throws Exception {
-            return this.instance;
-        }
-    }
-
-    private static class DefaultWebCrawlerFactory<T extends WebCrawler>
-        implements WebCrawlerFactory<T> {
-        final Class<T> clazz;
-
-        DefaultWebCrawlerFactory(Class<T> clazz) {
-            this.clazz = clazz;
-        }
-
-        @Override
-        public T newInstance() throws Exception {
-            try {
-                return clazz.newInstance();
-            } catch (ReflectiveOperationException e) {
-                throw e;
-            }
-        }
-    }
 
     /**
      * Start the crawling session and wait for it to finish.
@@ -184,17 +136,6 @@ public class CrawlController {
         this.start(new DefaultWebCrawlerFactory<>(clazz), numberOfCrawlers, true);
     }
 
-    /**
-     * Start the crawling session and wait for it to finish.
-     * This method depends on a single instance of a crawler. Only that instance will be used for crawling.
-     *
-     * @param instance
-     *            the instance of a class that implements the logic for crawler threads
-     * @param <T> Your class extending WebCrawler
-     */
-    public <T extends WebCrawler> void start(T instance) {
-        this.start(new SingleInstanceFactory<>(instance), 1, true);
-    }
 
     /**
      * Start the crawling session and wait for it to finish.
@@ -246,8 +187,8 @@ public class CrawlController {
         try {
             finished = false;
             setError(null);
-            crawlersLocalData.clear();
             final List<Thread> threads = new ArrayList<>();
+
             final List<T> crawlers = new ArrayList<>();
 
             for (int i = 1; i <= numberOfCrawlers; i++) {
@@ -341,7 +282,7 @@ public class CrawlController {
                                         frontier.finish();
                                         for (T crawler : crawlers) {
                                             crawler.onBeforeExit();
-                                            crawlersLocalData.add(crawler.getMyLocalData());
+//                                            crawlersLocalData.add(crawler.getMyLocalData());
                                         }
 
                                         logger.info(
@@ -350,12 +291,12 @@ public class CrawlController {
                                         sleep(config.getCleanupDelaySeconds());
 
                                         frontier.close();
-                                        docIdServer.close();
+//                                        docIdServer.close();
                                         pageFetcher.shutDown();
 
                                         finished = true;
                                         waitingLock.notifyAll();
-                                        env.close();
+//                                        env.close();
 
                                         return;
                                     }
@@ -366,12 +307,12 @@ public class CrawlController {
                         if (config.isHaltOnError()) {
                             setError(e);
                             synchronized (waitingLock) {
-                                frontier.finish();
-                                frontier.close();
-                                docIdServer.close();
+//                                frontier.finish();
+//                                frontier.close();
+//                                docIdServer.close();
                                 pageFetcher.shutDown();
                                 waitingLock.notifyAll();
-                                env.close();
+//                                env.close();
                             }
                         } else {
                             logger.error("Unexpected Error", e);
@@ -430,18 +371,6 @@ public class CrawlController {
         }
     }
 
-    /**
-     * Once the crawling session finishes the controller collects the local data of the crawler
-     * threads and stores them
-     * in a List.
-     * This function returns the reference to this list.
-     *
-     * @return List of Objects which are your local data
-     */
-    public List<Object> getCrawlersLocalData() {
-        return crawlersLocalData;
-    }
-
     protected static void sleep(int seconds) {
         try {
             Thread.sleep(seconds * 1000);
@@ -496,7 +425,7 @@ public class CrawlController {
                     logger.trace("This URL is already seen.");
                     return;
                 }
-                docId = docIdServer.getNewDocID(canonicalUrl);
+                docId = docIdServer.createDocId(canonicalUrl);
             } else {
                 try {
                     docIdServer.addUrlAndDocId(canonicalUrl, docId);
@@ -510,12 +439,11 @@ public class CrawlController {
             }
 
             WebURL webUrl = new WebURL();
-            webUrl.setTldList(tldList);
             webUrl.setURL(canonicalUrl);
             webUrl.setDocid(docId);
             webUrl.setDepth((short) 0);
             if (robotstxtServer.allows(webUrl)) {
-                frontier.schedule(webUrl);
+//                frontier.schedule(webUrl);
             } else {
                 // using the WARN level here, as the user specifically asked to add this seed
                 logger.warn("Robots.txt does not allow this seed: {}", pageUrl);
@@ -565,43 +493,7 @@ public class CrawlController {
         this.pageFetcher = pageFetcher;
     }
 
-    public RobotstxtServer getRobotstxtServer() {
-        return robotstxtServer;
-    }
 
-    public void setRobotstxtServer(RobotstxtServer robotstxtServer) {
-        this.robotstxtServer = robotstxtServer;
-    }
-
-    public Frontier getFrontier() {
-        return frontier;
-    }
-
-    public void setFrontier(Frontier frontier) {
-        this.frontier = frontier;
-    }
-
-    public DocIDServer getDocIdServer() {
-        return docIdServer;
-    }
-
-    public void setDocIdServer(DocIDServer docIdServer) {
-        this.docIdServer = docIdServer;
-    }
-
-    /**
-     * @deprecated implements a factory {@link WebCrawlerFactory} and inject your cutom data as
-     * shown <a href="https://github.com/yasserg/crawler4j#using-a-factory">here</a> .
-     */
-    @Deprecated
-    public Object getCustomData() {
-        return customData;
-    }
-
-    /**
-     * @deprecated implements a factory {@link WebCrawlerFactory} and inject your cutom data as
-     * shown <a href="https://github.com/yasserg/crawler4j#using-a-factory">here</a> .
-     */
 
     @Deprecated
     public void setCustomData(Object customData) {
@@ -625,10 +517,9 @@ public class CrawlController {
         logger.info("Shutting down...");
         this.shuttingDown = true;
         pageFetcher.shutDown();
-        frontier.finish();
     }
 
-    public CrawlConfig getConfig() {
+    public CrawlerConfig getConfig() {
         return config;
     }
 
@@ -640,7 +531,19 @@ public class CrawlController {
         this.error = e;
     }
 
-    public TLDList getTldList() {
-        return tldList;
+    public RobotstxtServer getRobotstxtServer() {
+        return robotstxtServer;
+    }
+
+    public void setRobotstxtServer(RobotstxtServer robotstxtServer) {
+        this.robotstxtServer = robotstxtServer;
+    }
+
+    public DocIDService getDocIdServer() {
+        return docIdServer;
+    }
+
+    public void setDocIdServer(DocIDService docIdServer) {
+        this.docIdServer = docIdServer;
     }
 }

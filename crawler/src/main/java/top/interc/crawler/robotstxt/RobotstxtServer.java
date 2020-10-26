@@ -20,7 +20,7 @@ import org.apache.http.HttpStatus;
 import org.apache.http.NoHttpResponseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import top.interc.crawler.WebURL;
+import top.interc.crawler.url.WebURL;
 import top.interc.crawler.controller.CrawlerConfig;
 import top.interc.crawler.controller.Page;
 import top.interc.crawler.exceptions.PageBiggerThanMaxSizeException;
@@ -161,9 +161,9 @@ public class RobotstxtServer {
             // No logging here, as it just means that robots.txt doesn't exist on this server
             // which is perfectly ok
             logger.trace("robots.txt probably does not exist.", se);
-//        } catch (PageBiggerThanMaxSizeException pbtms) {
-//            logger.error("Error occurred while fetching (robots) url: {}, {}",
-//                         robotsTxtUrl.getURL(), pbtms.getMessage());
+        } catch (PageBiggerThanMaxSizeException pbtms) {
+            logger.error("Error occurred while fetching (robots) url: {}, {}",
+                         robotsTxtUrl.getURL(), pbtms.getMessage());
         } catch (IOException e) {
             logger.error("Error occurred while fetching (robots) url: " + robotsTxtUrl.getURL(), e);
         } catch (InterruptedException | RuntimeException e) {

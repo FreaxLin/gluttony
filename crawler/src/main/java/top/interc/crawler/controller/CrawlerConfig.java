@@ -6,9 +6,11 @@ import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.conn.DnsResolver;
 import org.apache.http.impl.conn.SystemDefaultDnsResolver;
 import org.apache.http.message.BasicHeader;
+import top.interc.crawler.controller.authentication.AuthInfo;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 public class CrawlerConfig {
 
@@ -107,7 +109,10 @@ public class CrawlerConfig {
     private boolean followRedirects = true;
 
 
-
+    /**
+     * List of possible authentications needed by crawler
+     */
+    private List<AuthInfo> authInfos;
 
 
     /**
@@ -554,6 +559,14 @@ public class CrawlerConfig {
         this.cookieStore = cookieStore;
     }
 
+    public List<AuthInfo> getAuthInfos() {
+        return authInfos;
+    }
+
+    public void setAuthInfos(List<AuthInfo> authInfos) {
+        this.authInfos = authInfos;
+    }
+
     /**
      * Gets the current {@link CookieStore} used
      * @return the {@link CookieStore}
@@ -609,6 +622,8 @@ public class CrawlerConfig {
     public void setAllowSingleLevelDomain(boolean allowSingleLevelDomain) {
         this.allowSingleLevelDomain = allowSingleLevelDomain;
     }
+
+
 
     /**
      * Number of pages to fetch/process from the database in a single read transaction.

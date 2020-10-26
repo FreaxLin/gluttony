@@ -18,7 +18,7 @@
 package top.interc.crawler.parser;
 
 
-import top.interc.crawler.WebURL;
+import top.interc.crawler.url.WebURL;
 
 import java.util.Set;
 

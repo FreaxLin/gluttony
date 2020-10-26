@@ -8,7 +8,7 @@ import org.apache.tika.parser.html.HtmlMapper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import top.interc.crawler.WebURL;
+import top.interc.crawler.url.WebURL;
 import top.interc.crawler.controller.CrawlerConfig;
 import top.interc.crawler.controller.Page;
 import top.interc.crawler.exceptions.ParseException;
