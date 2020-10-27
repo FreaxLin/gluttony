@@ -24,6 +24,10 @@ import org.slf4j.LoggerFactory;
 import top.interc.crawler.controller.CrawlerConfig;
 import top.interc.crawler.controller.Page;
 import top.interc.crawler.exceptions.ParseException;
+import top.interc.crawler.util.Util;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Yasser Ganjisaffar
@@ -34,9 +38,11 @@ public class Parser {
 
     private final CrawlerConfig config;
 
+    private Map<String, CrawContentParse> contentParseMap = new HashMap<>();
 
     public Parser(CrawlerConfig config) {
         this.config = config;
+
     }
 
     public void parse(Page page, String contextURL) throws NotAllowedContentException, ParseException {
