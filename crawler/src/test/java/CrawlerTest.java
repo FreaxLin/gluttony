@@ -10,7 +10,7 @@ public class CrawlerTest {
 
     @Test
     public void test() throws Exception {
-        String crawlStorageFolder = "/data/crawl/root";
+        String crawlStorageFolder = "/Users/sai/OpenSources/gluttony/data";
         int numberOfCrawlers = 7;
 
         CrawlerConfig config = new CrawlerConfig();

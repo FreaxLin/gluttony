@@ -18,6 +18,7 @@
 package top.interc.crawler.controller;
 
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.interc.crawler.fetcher.PageFetcher;
@@ -28,6 +29,7 @@ import top.interc.crawler.parser.Parser;
 import top.interc.crawler.robotstxt.RobotstxtServer;
 import top.interc.crawler.url.URLCanonicalizer;
 import top.interc.crawler.url.WebURL;
+import top.interc.crawler.util.Util;
 
 import java.io.File;
 import java.io.IOException;
@@ -77,7 +79,7 @@ public class CrawlController {
         File folder = new File(config.getCrawlStorageFolder());
         if (!folder.exists()) {
             if (folder.mkdirs()) {
-                logger.debug("Created folder: " + folder.getAbsolutePath());
+                logger.info("Created folder: " + folder.getAbsolutePath());
             } else {
                 throw new Exception(
                     "couldn't create the storage folder: " + folder.getAbsolutePath() +
@@ -85,33 +87,21 @@ public class CrawlController {
             }
         }
 
-
-        URLCanonicalizer.setHaltOnError(config.isHaltOnError());
-
         boolean resumable = config.isResumableCrawling();
 
-
-        File envHome = new File(config.getCrawlStorageFolder() + "/frontier");
-        if (!envHome.exists()) {
-            if (envHome.mkdir()) {
-                logger.debug("Created folder: " + envHome.getAbsolutePath());
-            } else {
-                throw new Exception(
-                    "Failed creating the frontier folder: " + envHome.getAbsolutePath());
-            }
-        }
-
         if (!resumable) {
-//            PolicyUtils.IO.deleteFolderContents(envHome);
-            logger.info("Deleted contents of: " + envHome +
-                        " ( as you have configured resumable crawling to false )");
+            Util.cleanFolder(config.getCrawlStorageFolder());
+            logger.info("Deleted contents of: " + config.getCrawlStorageFolder() +
+                    " ( as you have configured resumable crawling to false )");
         }
+
+        URLCanonicalizer.setHaltOnError(config.isHaltOnError());
 
         docIdServer = new MapDBDocIDBase(config);
 
         this.pageFetcher = pageFetcher;
-//        this.parser = parser == null ? new Parser(config, tldList) : parser;
-//        this.robotstxtServer = robotstxtServer;
+        this.parser = parser == null ? new Parser(config) : parser;
+        this.robotstxtServer = robotstxtServer;
 
         finished = false;
         shuttingDown = false;

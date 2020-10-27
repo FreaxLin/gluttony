@@ -35,7 +35,7 @@ public class Parser {
     private final CrawlerConfig config;
 
 
-    public Parser(CrawlerConfig config, HtmlParser htmlParser) {
+    public Parser(CrawlerConfig config) {
         this.config = config;
     }
 

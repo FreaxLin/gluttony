@@ -27,7 +27,6 @@ public class CrawlerConfig {
     private boolean resumableCrawling = false;
 
 
-
     /**
      * Maximum depth of crawling For unlimited depth this parameter should be
      * set to -1
@@ -622,6 +621,7 @@ public class CrawlerConfig {
     public void setAllowSingleLevelDomain(boolean allowSingleLevelDomain) {
         this.allowSingleLevelDomain = allowSingleLevelDomain;
     }
+
 
 
 

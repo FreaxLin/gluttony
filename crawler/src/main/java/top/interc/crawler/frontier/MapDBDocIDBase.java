@@ -8,7 +8,9 @@ import org.mapdb.DBMaker;
 import org.mapdb.Serializer;
 import top.interc.crawler.controller.CrawlerConfig;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class MapDBDocIDBase implements DocIDService {
@@ -21,18 +23,15 @@ public class MapDBDocIDBase implements DocIDService {
 
     private static final String DATABASE_NAME = "DocIDs";
 
-    private AtomicLong lastID = new AtomicLong(0);
+    private AtomicInteger lastID = new AtomicInteger(0);
 
-    private ConcurrentMap<String, Long> docIDMap;
+    private ConcurrentMap<String, Integer> docIDMap;
 
     public MapDBDocIDBase(CrawlerConfig crawlerConfig) {
-        //对于1，表示如果支持的话使用mmap，也就是在64为操作系统开启，32位不开启，因为太小了；
-        //对于2，是对使用mmap的优化，官方文档说快快快
-        //对于3，这是针对使用mmap时，jvm所出现的bug所做的处理，实际上也还有其他问题，具体可参考官方文档和http://www.mapdb.org/blog/mmap_file_and_jvm_crash/
-        //对于4，指的是jvm正常关闭时，将会关闭数据库，但是如果使用kill -9等强制关闭措施将导致mapdb的校验和出现问题，下次打开时将出现异常，虽然可以使用checksumHeaderBypass参数规避这个问题，但是官方还是建议使用事务来保证数据的安全性
-        //对于5，开启事务，写的速度下降，但是数据安全了
-        //对于6，数据库内部本质还是读写锁，因此更高的并发度设置在并发写的时候可以提供写性能
-        DB db = DBMaker.fileDB(crawlerConfig.getCrawlStorageFolder())
+
+        String urlCrawFile = crawlerConfig.getCrawlStorageFolder() + "/id";
+
+        DB db = DBMaker.fileDB(urlCrawFile)
                 .fileMmapEnableIfSupported()
                 .fileMmapPreclearDisable()
                 .cleanerHackEnable()
@@ -44,33 +43,44 @@ public class MapDBDocIDBase implements DocIDService {
 
         this.docIDMap = db.treeMap(DATABASE_NAME)
                 .keySerializer(Serializer.STRING)
-                .valueSerializer(Serializer.LONG)
+                .valueSerializer(Serializer.INTEGER)
                 .valuesOutsideNodesEnable()
                 .createOrOpen();
 
         BloomFilter<CharSequence> bloomFilter = BloomFilter.create(Funnels.stringFunnel(Charsets.UTF_8), 200000, 1E-7);
+        int max = 0;
+        //恢复布隆过滤器
+        if (crawlerConfig.isResumableCrawling()){
+            for (Map.Entry<String, Integer> entry : docIDMap.entrySet()){
+                bloomFilter.put(entry.getKey());
+                if (entry.getValue() > max){
+                    max = entry.getValue();
+                }
+            }
+            this.lastID = new AtomicInteger(max);
+        }
+
         this.bloomFilter = bloomFilter;
     }
 
     @Override
     public int getDocId(String url) {
-        return 0;
+        return this.docIDMap.get(url);
     }
 
     @Override
     public int createDocId(String url) {
-
         return 0;
     }
 
     @Override
     public void addUrlAndDocId(String url, int docId) {
-
+        this.docIDMap.put(url, docId);
     }
 
     @Override
     public int getDocCount() {
-        return 0;
+        return this.docIDMap.size();
     }
 
     @Override

@@ -17,6 +17,8 @@
 
 package top.interc.crawler.util;
 
+import java.io.File;
+
 /**
  * @author Yasser Ganjisaffar
  */
@@ -83,6 +85,14 @@ public class Util {
         String typeStr = (contentType != null) ? contentType.toLowerCase() : "";
 
         return typeStr.contains("css");
+    }
+
+    public static void cleanFolder(String path){
+        File storage = new File(path);
+        File[] files = storage.listFiles();
+        for (File file : files){
+            file.delete();
+        }
     }
 
 }
