@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-package top.interc.crawler.frontier;
+package top.interc.crawler.schedule;
 
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
 import java.util.Map;
 
 

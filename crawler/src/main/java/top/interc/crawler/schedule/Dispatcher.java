@@ -1,33 +1,20 @@
-/**
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-package top.interc.crawler.frontier;
+package top.interc.crawler.schedule;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import top.interc.crawler.controller.CrawlerConfig;
+
+import top.interc.crawler.storage.DocIDService;
+import top.interc.crawler.storage.EmbeddedQueue;
+import top.interc.crawler.storage.MapDBDocIDBase;
 import top.interc.crawler.storage.UnCralwUrlQueues;
 import top.interc.crawler.url.WebURL;
-import top.interc.crawler.controller.CrawlerConfig;
 
 import java.util.List;
 
+public class Dispatcher {
 
-public class Frontier {
-    protected static final Logger logger = LoggerFactory.getLogger(Frontier.class);
+    protected static final Logger logger = LoggerFactory.getLogger(Dispatcher.class);
 
     private static final String DATABASE_NAME = "PendingURLsDB";
 
@@ -35,9 +22,10 @@ public class Frontier {
 
     private CrawlerConfig config;
 
-    private UnCralwUrlQueues queues;
+    private EmbeddedQueue<WebURL> queues;
 
-    protected final Object mutex = new Object();
+    private DocIDService docIDService;
+
     protected final Object waitingList = new Object();
 
     protected boolean isFinished = false;
@@ -46,14 +34,12 @@ public class Frontier {
 
     protected Counters counters;
 
-    public Frontier(CrawlerConfig config) {
+    public Dispatcher(CrawlerConfig config) {
         this.config = config;
-        UnCralwUrlQueues unCralwUrlQueues = new UnCralwUrlQueues(config);
+        this.queues = new UnCralwUrlQueues(config);
+        this.docIDService = new MapDBDocIDBase(config);
     }
 
-    public void scheduleAll(List<WebURL> urls) {
-
-    }
 
     public void schedule(WebURL url) {
         int maxPagesToFetch = config.getMaxPagesToFetch();

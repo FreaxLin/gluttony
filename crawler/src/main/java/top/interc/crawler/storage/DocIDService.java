@@ -1,4 +1,4 @@
-package top.interc.crawler.frontier;
+package top.interc.crawler.storage;
 
 public interface DocIDService {
 
