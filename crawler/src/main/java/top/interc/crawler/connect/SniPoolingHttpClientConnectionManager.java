@@ -1,4 +1,4 @@
-package top.interc.crawler.fetcher;
+package top.interc.crawler.connect;
 
 import org.apache.http.HttpClientConnection;
 import org.apache.http.config.Registry;
@@ -9,6 +9,7 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.protocol.HttpContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import top.interc.crawler.fetcher.SniSSLConnectionSocketFactory;
 
 import javax.net.ssl.SSLProtocolException;
 import java.io.IOException;
