@@ -1,5 +1,6 @@
 package top.interc.crawler.connect;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class HttpResult {
@@ -10,9 +11,13 @@ public class HttpResult {
 
     private String reasonPhrase;
 
-    private Map<String, String> header;
+    private Map<String, String> header = new HashMap<>();
 
     private String content;
+
+    public void addHeader(String key, String value){
+        this.header.put(key, value);
+    }
 
     public int getCode() {
         return code;
