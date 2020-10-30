@@ -6,11 +6,9 @@ import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.conn.DnsResolver;
 import org.apache.http.impl.conn.SystemDefaultDnsResolver;
 import org.apache.http.message.BasicHeader;
-import top.interc.crawler.controller.authentication.AuthInfo;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 
 public class CrawlerConfig {
 
@@ -108,11 +106,6 @@ public class CrawlerConfig {
     private boolean followRedirects = true;
 
 
-    /**
-     * List of possible authentications needed by crawler
-     */
-    private List<AuthInfo> authInfos;
-
 
     /**
      * Should the crawler stop running when the queue is empty?
@@ -180,6 +173,8 @@ public class CrawlerConfig {
      * useful for passing initial cookies to the crawler.
      */
     private CookieStore cookieStore;
+
+    private int httpServerPort;
 
     /**
      * DNS resolver to use, {@link SystemDefaultDnsResolver} is default.
@@ -558,12 +553,12 @@ public class CrawlerConfig {
         this.cookieStore = cookieStore;
     }
 
-    public List<AuthInfo> getAuthInfos() {
-        return authInfos;
+    public int getHttpServerPort() {
+        return httpServerPort;
     }
 
-    public void setAuthInfos(List<AuthInfo> authInfos) {
-        this.authInfos = authInfos;
+    public void setHttpServerPort(int httpServerPort) {
+        this.httpServerPort = httpServerPort;
     }
 
     /**

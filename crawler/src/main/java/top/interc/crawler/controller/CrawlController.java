@@ -18,14 +18,20 @@
 package top.interc.crawler.controller;
 
 
+import org.eclipse.jetty.server.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import top.interc.crawler.fetcher.PageFetcher;
-import top.interc.crawler.frontier.DocIDService;
-import top.interc.crawler.frontier.Frontier;
-import top.interc.crawler.frontier.MapDBDocIDBase;
+import top.interc.crawler.connect.HttpConnection;
+import top.interc.crawler.monitor.ConfigRequestHandler;
+import top.interc.crawler.monitor.CrawInfoRequestHandler;
+import top.interc.crawler.monitor.JVMInfoRequestHandler;
+import top.interc.crawler.monitor.RequestHandler;
 import top.interc.crawler.parser.Parser;
+import top.interc.crawler.robotstxt.RobotstxtConfig;
 import top.interc.crawler.robotstxt.RobotstxtServer;
+import top.interc.crawler.schedule.Dispatcher;
+import top.interc.crawler.storage.DocIDService;
+import top.interc.crawler.storage.MapDBDocIDBase;
 import top.interc.crawler.url.URLCanonicalizer;
 import top.interc.crawler.url.WebURL;
 import top.interc.crawler.util.Util;
@@ -49,29 +55,24 @@ public class CrawlController {
 
     private Throwable error;
 
-    private Frontier frontier;
+    private Server server;
+
+    private Dispatcher dispatcher;
 
     protected boolean shuttingDown;
-
-    protected PageFetcher pageFetcher;
 
     protected RobotstxtServer robotstxtServer;
 
     protected DocIDService docIdServer;
 
+    private HttpConnection httpConnection;
+
     protected final Object waitingLock = new Object();
 
     protected Parser parser;
 
-    public CrawlController(CrawlerConfig config, PageFetcher pageFetcher,
-                           RobotstxtServer robotstxtServer) throws Exception {
-        this(config, pageFetcher, null, robotstxtServer);
-    }
 
-
-
-    public CrawlController(CrawlerConfig config, PageFetcher pageFetcher, Parser parser,
-                           RobotstxtServer robotstxtServer) throws Exception {
+    public CrawlController(CrawlerConfig config) throws Exception {
         config.validate();
         this.config = config;
 
@@ -96,19 +97,28 @@ public class CrawlController {
 
         URLCanonicalizer.setHaltOnError(config.isHaltOnError());
 
+        server = new Server(config.getHttpServerPort());
+        RequestHandler requestHandler = new RequestHandler();
+        requestHandler.addHander("/config", new ConfigRequestHandler(config));
+        requestHandler.addHander("/jvm", new JVMInfoRequestHandler());
+        requestHandler.addHander("/static", new CrawInfoRequestHandler(docIdServer));
+        server.setHandler(requestHandler);
+
+        server.start();
+        server.join();
+
+
         docIdServer = new MapDBDocIDBase(config);
 
-        this.pageFetcher = pageFetcher;
         this.parser = parser == null ? new Parser(config) : parser;
-        this.robotstxtServer = robotstxtServer;
+//        RobotstxtConfig robotstxtConfig = new RobotstxtConfig();
+//        this.robotstxtServer = new RobotstxtServer(robotstxtConfig);
 
         finished = false;
         shuttingDown = false;
 
         robotstxtServer.setCrawlConfig(config);
     }
-
-
 
 
 
@@ -125,21 +135,6 @@ public class CrawlController {
     public <T extends WebCrawler> void start(WebCrawlerFactory<T> crawlerFactory,
                                              int numberOfCrawlers) {
         this.start(crawlerFactory, numberOfCrawlers, true);
-    }
-
-    /**
-     * Start the crawling session and return immediately.
-     *
-     * @param crawlerFactory
-     *            factory to create crawlers on demand for each thread
-     * @param numberOfCrawlers
-     *            the number of concurrent threads that will be contributing in
-     *            this crawling session.
-     * @param <T> Your class extending WebCrawler
-     */
-    public <T extends WebCrawler> void startNonBlocking(WebCrawlerFactory<T> crawlerFactory,
-                                                        final int numberOfCrawlers) {
-        this.start(crawlerFactory, numberOfCrawlers, false);
     }
 
 
@@ -376,7 +371,7 @@ public class CrawlController {
             webUrl.setDocid(docId);
             webUrl.setDepth((short) 0);
             if (robotstxtServer.allows(webUrl)) {
-                frontier.schedule(webUrl);
+                dispatcher.schedule(webUrl);
             } else {
                 // using the WARN level here, as the user specifically asked to add this seed
                 logger.warn("Robots.txt does not allow this seed: {}", pageUrl);
@@ -418,20 +413,6 @@ public class CrawlController {
         }
     }
 
-    public PageFetcher getPageFetcher() {
-        return pageFetcher;
-    }
-
-    public void setPageFetcher(PageFetcher pageFetcher) {
-        this.pageFetcher = pageFetcher;
-    }
-
-
-
-    @Deprecated
-    public void setCustomData(Object customData) {
-        this.customData = customData;
-    }
 
     public boolean isFinished() {
         return this.finished;
@@ -449,7 +430,7 @@ public class CrawlController {
     public void shutdown() {
         logger.info("Shutting down...");
         this.shuttingDown = true;
-        pageFetcher.shutDown();
+        dispatcher.close();
     }
 
     public CrawlerConfig getConfig() {
@@ -478,6 +459,30 @@ public class CrawlController {
 
     public void setDocIdServer(DocIDService docIdServer) {
         this.docIdServer = docIdServer;
+    }
+
+    public Dispatcher getDispatcher() {
+        return dispatcher;
+    }
+
+    public void setDispatcher(Dispatcher dispatcher) {
+        this.dispatcher = dispatcher;
+    }
+
+    public Parser getParser() {
+        return parser;
+    }
+
+    public void setParser(Parser parser) {
+        this.parser = parser;
+    }
+
+    public HttpConnection getHttpConnection() {
+        return httpConnection;
+    }
+
+    public void setHttpConnection(HttpConnection httpConnection) {
+        this.httpConnection = httpConnection;
     }
 
     public interface WebCrawlerFactory<T extends WebCrawler> {

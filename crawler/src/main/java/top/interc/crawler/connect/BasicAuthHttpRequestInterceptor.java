@@ -1,4 +1,4 @@
-package top.interc.crawler.fetcher;
+package top.interc.crawler.connect;
 
 import org.apache.http.HttpHost;
 import org.apache.http.HttpRequest;
