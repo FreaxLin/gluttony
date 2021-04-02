@@ -23,7 +23,9 @@
         <wiremock.version>2.14.0</wiremock.version>
         <spock.version>1.0-groovy-2.4</spock.version>
         <groovy.version>2.4.12</groovy.version>
+        <jackjson.version>2.9.5</jackjson.version>
     </properties>
+
     <dependencies>
         <dependency>
             <!-- Logging framework -->
@@ -299,6 +301,16 @@
             <groupId>org.eclipse.jetty.aggregate</groupId>
             <artifactId>jetty-all</artifactId>
             <version>9.4.6.v20170531</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.10</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>1.9</version>
         </dependency>
     </dependencies>
     <!--<build>-->

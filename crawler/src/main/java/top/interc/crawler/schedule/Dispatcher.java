@@ -4,10 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.interc.crawler.controller.CrawlerConfig;
 
+import top.interc.crawler.executor.CrawlTask;
+import top.interc.crawler.executor.CrawlTaskSerializer;
 import top.interc.crawler.storage.DocIDService;
 import top.interc.crawler.storage.EmbeddedQueue;
 import top.interc.crawler.storage.MapDBDocIDBase;
-import top.interc.crawler.storage.UnCralwUrlQueues;
+import top.interc.crawler.storage.PreCrawlUrlQueue;
 import top.interc.crawler.url.WebURL;
 
 import java.util.List;
@@ -22,7 +24,7 @@ public class Dispatcher {
 
     private CrawlerConfig config;
 
-    private EmbeddedQueue<WebURL> queues;
+    private EmbeddedQueue<CrawlTask> queues;
 
     private DocIDService docIDService;
 
@@ -36,7 +38,7 @@ public class Dispatcher {
 
     public Dispatcher(CrawlerConfig config) {
         this.config = config;
-        this.queues = new UnCralwUrlQueues(config);
+        this.queues = new PreCrawlUrlQueue<>(config, new CrawlTaskSerializer());
         this.docIDService = new MapDBDocIDBase(config);
     }
 
@@ -45,7 +47,6 @@ public class Dispatcher {
         int maxPagesToFetch = config.getMaxPagesToFetch();
 
         if (maxPagesToFetch < 0 || scheduledPages < maxPagesToFetch) {
-            queues.put(url);
             scheduledPages++;
             counters.increment(Counters.ReservedCounterNames.SCHEDULED_PAGES);
         }
