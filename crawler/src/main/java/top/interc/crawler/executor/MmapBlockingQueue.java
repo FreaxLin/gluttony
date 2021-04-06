@@ -108,7 +108,7 @@ public class MmapBlockingQueue<E> extends AbstractQueue<E>
 
     @Override
     public E poll() {
-        return null;
+        return (this.queues.size() == 0) ? null : dequeue();
     }
 
     @Override

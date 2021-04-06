@@ -12,7 +12,47 @@ public class CrawlerConfig {
 
     private String userAgentString = "";
 
+    private int connectionTimeOut = 60000;
+
+    private int socketTimeOut = 60000;
+
     private int crawlerNumber = Runtime.getRuntime().availableProcessors() * 4;
+
+    private String cookiePolicy = "";
+
+    private boolean includeHttpsPage;
+
+    public boolean isIncludeHttpsPage() {
+        return includeHttpsPage;
+    }
+
+    public void setIncludeHttpsPage(boolean includeHttpsPage) {
+        this.includeHttpsPage = includeHttpsPage;
+    }
+
+    public String getCookiePolicy() {
+        return cookiePolicy;
+    }
+
+    public void setCookiePolicy(String cookiePolicy) {
+        this.cookiePolicy = cookiePolicy;
+    }
+
+    public int getConnectionTimeOut() {
+        return connectionTimeOut;
+    }
+
+    public void setConnectionTimeOut(int connectionTimeOut) {
+        this.connectionTimeOut = connectionTimeOut;
+    }
+
+    public int getSocketTimeOut() {
+        return socketTimeOut;
+    }
+
+    public void setSocketTimeOut(int socketTimeOut) {
+        this.socketTimeOut = socketTimeOut;
+    }
 
     public String getCrawlStorageFolder() {
         return crawlStorageFolder;
