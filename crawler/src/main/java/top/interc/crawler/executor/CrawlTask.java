@@ -2,7 +2,6 @@ package top.interc.crawler.executor;
 
 import top.interc.crawler.connect.HttpConnection;
 import top.interc.crawler.connect.HttpResult;
-import top.interc.crawler.parser.ParseData;
 
 import java.io.IOException;
 import java.util.Map;
@@ -35,16 +34,26 @@ public class CrawlTask implements Runnable {
     @Override
     public void run() {
         System.out.println(url);
-//        try {
-//            HttpResult result = connection.get(url);
-//            Map<String, String> headerMap = result.getHeader();
-//            String contentType = headerMap.get("Content-Type");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            HttpResult result = connection.get(url);
+            System.out.println(result.getContent());
+            Map<String, String> headerMap = result.getHeader();
+            String contentType = headerMap.get("Content-Type");
+            System.out.println(contentType);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-//    public abstract void save(ParseData data);
+    public HttpConnection getConnection() {
+        return connection;
+    }
+
+    public void setConnection(HttpConnection connection) {
+        this.connection = connection;
+    }
+
+    //    public abstract void save(ParseData data);
 //
 //    public abstract void filter(String url);
 }

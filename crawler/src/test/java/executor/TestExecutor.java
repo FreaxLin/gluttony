@@ -21,7 +21,7 @@ public class TestExecutor {
         CrawlConfig config = new CrawlConfig();
         config.setCrawlStorageFolder("queue");
         config.setCrawlerNumber(1);
-        CrawlExecutor executor = new CrawlExecutor(config);
+        CrawlExecutor executor = new CrawlExecutor(config, null);
         for(int i = 0; i < 10; i++){
             executor.execute(new CrawlTask(RandomStringUtils.randomAlphabetic(10)));
         }

@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.mapdb.DataInput2;
 import org.mapdb.DataOutput2;
 import org.mapdb.Serializer;
+import top.interc.crawler.connect.HttpConnection;
 
 import java.io.IOException;
 
@@ -15,6 +16,15 @@ import java.io.IOException;
  * @version: 1.0
  */
 public class CrawlTaskSerializer implements Serializer<CrawlTask> {
+
+    private HttpConnection connection;
+
+    public CrawlTaskSerializer(HttpConnection connection) {
+        this.connection = connection;
+    }
+
+    public CrawlTaskSerializer() {
+    }
 
     @Override
     public void serialize(@NotNull DataOutput2 dataOutput2, @NotNull CrawlTask crawlTask) throws IOException {
@@ -28,6 +38,7 @@ public class CrawlTaskSerializer implements Serializer<CrawlTask> {
         }else{
             String url = dataInput2.readUTF();
             CrawlTask task = new CrawlTask(url);
+            task.setConnection(connection);
             return task;
         }
 

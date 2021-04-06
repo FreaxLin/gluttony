@@ -1,5 +1,8 @@
 package top.interc.crawler.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CrawlConfig {
 
     private String crawlStorageFolder;
@@ -21,6 +24,20 @@ public class CrawlConfig {
     private String cookiePolicy = "";
 
     private boolean includeHttpsPage = true;
+
+    private List<String> seeds = new ArrayList<>();
+
+    public void addSeed(String url){
+        this.seeds.add(url);
+    }
+
+    public List<String> getSeeds() {
+        return seeds;
+    }
+
+    public void setSeeds(List<String> seeds) {
+        this.seeds = seeds;
+    }
 
     public boolean isIncludeHttpsPage() {
         return includeHttpsPage;

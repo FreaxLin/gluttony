@@ -1,13 +1,15 @@
 package top.interc.crawler.controller;
 
 import top.interc.crawler.connect.DefaultHttpConnection;
-import top.interc.crawler.connect.HttpResult;
+import top.interc.crawler.connect.HttpConnection;
 import top.interc.crawler.executor.CrawlExecutor;
+import top.interc.crawler.executor.CrawlTask;
 
-import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 public class CrawlController {
 
@@ -15,18 +17,35 @@ public class CrawlController {
 
     private CrawlExecutor crawlExecutor;
 
+    private HttpConnection connection;
+
+    private CountDownLatch status;
+
     public CrawlController(CrawlConfig config) {
         this.config = config;
-        this.crawlExecutor = new CrawlExecutor(config);
+
         try {
-            DefaultHttpConnection connection = new DefaultHttpConnection(config);
+            this.connection = new DefaultHttpConnection(config);
+            this.crawlExecutor = new CrawlExecutor(config, connection);
         } catch (NoSuchAlgorithmException | KeyStoreException | KeyManagementException e) {
             e.printStackTrace();
         }
     }
 
     public void start(){
+        this.status = new CountDownLatch(1);
+        List<String> seeds = config.getSeeds();
+        for (String url : seeds){
+            CrawlTask task = new CrawlTask(url);
+            task.setConnection(this.connection);
+            this.crawlExecutor.execute(task);
+        }
 
+        try {
+            status.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 }

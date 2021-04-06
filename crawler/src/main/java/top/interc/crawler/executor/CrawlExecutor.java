@@ -1,5 +1,6 @@
 package top.interc.crawler.executor;
 
+import top.interc.crawler.connect.HttpConnection;
 import top.interc.crawler.controller.CrawlConfig;
 
 import java.util.concurrent.*;
@@ -17,11 +18,11 @@ public class CrawlExecutor{
 
     private CrawlConfig config;
 
-    public CrawlExecutor(CrawlConfig config) {
+    public CrawlExecutor(CrawlConfig config, HttpConnection connection) {
         int threadNum = config.getCrawlerNumber();
         this.crawlExecutor = new ThreadPoolExecutor(threadNum, threadNum,
                 0L, TimeUnit.MILLISECONDS,
-                new MmapBlockingQueue(config, new CrawlTaskSerializer()),
+                new MmapBlockingQueue(config, new CrawlTaskSerializer(connection)),
 //                new ArrayBlockingQueue<>(10),
                 new CrawlhreadFactory(),
                 new CrawlRejectedExecutionHandler());
