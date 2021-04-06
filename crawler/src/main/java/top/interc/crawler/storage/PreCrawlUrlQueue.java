@@ -37,7 +37,6 @@ public class PreCrawlUrlQueue<T> implements EmbeddedQueue<T>{
         this.urlQueue = this.db.indexTreeList(DATABASE_NAME, serializer).createOrOpen();
     }
 
-
     @Override
     public boolean put(T data) {
         this.urlQueue.add(data);

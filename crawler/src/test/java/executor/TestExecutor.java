@@ -5,6 +5,7 @@ import org.junit.Test;
 import top.interc.crawler.controller.CrawlConfig;
 import top.interc.crawler.executor.CrawlExecutor;
 import top.interc.crawler.executor.CrawlTask;
+import top.interc.crawler.executor.SimpleCrawlTask;
 
 
 /**
@@ -23,7 +24,7 @@ public class TestExecutor {
         config.setCrawlerNumber(1);
         CrawlExecutor executor = new CrawlExecutor(config, null);
         for(int i = 0; i < 10; i++){
-            executor.execute(new CrawlTask(RandomStringUtils.randomAlphabetic(10)));
+            executor.execute(new SimpleCrawlTask(RandomStringUtils.randomAlphabetic(10)));
         }
         try {
             Thread.sleep(3000000);

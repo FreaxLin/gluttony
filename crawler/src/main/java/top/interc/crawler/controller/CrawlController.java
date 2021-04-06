@@ -4,6 +4,7 @@ import top.interc.crawler.connect.DefaultHttpConnection;
 import top.interc.crawler.connect.HttpConnection;
 import top.interc.crawler.executor.CrawlExecutor;
 import top.interc.crawler.executor.CrawlTask;
+import top.interc.crawler.executor.CrawlTaskFactory;
 
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
@@ -21,9 +22,11 @@ public class CrawlController {
 
     private CountDownLatch status;
 
+    private String className;
+
     public CrawlController(CrawlConfig config) {
         this.config = config;
-
+        this.className = config.getBaseCrawlClazzName();
         try {
             this.connection = new DefaultHttpConnection(config);
             this.crawlExecutor = new CrawlExecutor(config, connection);
@@ -36,7 +39,7 @@ public class CrawlController {
         this.status = new CountDownLatch(1);
         List<String> seeds = config.getSeeds();
         for (String url : seeds){
-            CrawlTask task = new CrawlTask(url);
+            CrawlTask task = CrawlTaskFactory.build(className, url);
             task.setConnection(this.connection);
             this.crawlExecutor.execute(task);
         }

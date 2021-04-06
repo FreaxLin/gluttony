@@ -63,8 +63,6 @@ public class MmapBlockingQueue<E> extends AbstractQueue<E>
         }finally {
             lock.unlock();
         }
-
-
     }
 
     @Override

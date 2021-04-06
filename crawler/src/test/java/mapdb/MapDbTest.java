@@ -4,11 +4,10 @@ import org.junit.Test;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import org.mapdb.IndexTreeList;
-import org.mapdb.Serializer;
 import top.interc.crawler.executor.CrawlTask;
 import top.interc.crawler.executor.CrawlTaskSerializer;
+import top.interc.crawler.executor.SimpleCrawlTask;
 
-import java.util.NavigableSet;
 
 /**
  * @author ：linweisen
@@ -31,7 +30,7 @@ public class MapDbTest {
                 .make();
 
         IndexTreeList<CrawlTask> s = db.indexTreeList("test", new CrawlTaskSerializer()).createOrOpen();
-        CrawlTask task = new CrawlTask("www.bai.com");
+        CrawlTask task = new SimpleCrawlTask("www.bai.com");
 
         s.add(task);
         db.commit();

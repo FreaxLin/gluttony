@@ -23,7 +23,6 @@ public class CrawlExecutor{
         this.crawlExecutor = new ThreadPoolExecutor(threadNum, threadNum,
                 0L, TimeUnit.MILLISECONDS,
                 new MmapBlockingQueue(config, new CrawlTaskSerializer(connection)),
-//                new ArrayBlockingQueue<>(10),
                 new CrawlhreadFactory(),
                 new CrawlRejectedExecutionHandler());
     }

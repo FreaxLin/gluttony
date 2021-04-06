@@ -19,6 +19,8 @@ public class CrawlTaskSerializer implements Serializer<CrawlTask> {
 
     private HttpConnection connection;
 
+    private String className = "top.interc.crawler.executor.SimpleCrawlTask";
+
     public CrawlTaskSerializer(HttpConnection connection) {
         this.connection = connection;
     }
@@ -37,7 +39,7 @@ public class CrawlTaskSerializer implements Serializer<CrawlTask> {
             return null;
         }else{
             String url = dataInput2.readUTF();
-            CrawlTask task = new CrawlTask(url);
+            CrawlTask task = CrawlTaskFactory.build(className, url);
             task.setConnection(connection);
             return task;
         }

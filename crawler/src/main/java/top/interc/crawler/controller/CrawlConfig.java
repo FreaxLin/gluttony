@@ -27,6 +27,16 @@ public class CrawlConfig {
 
     private List<String> seeds = new ArrayList<>();
 
+    private String baseCrawlClazzName = "top.interc.crawler.executor.SimpleCrawlTask";
+
+    public String getBaseCrawlClazzName() {
+        return baseCrawlClazzName;
+    }
+
+    public void setBaseCrawlClazzName(String baseCrawlClazzName) {
+        this.baseCrawlClazzName = baseCrawlClazzName;
+    }
+
     public void addSeed(String url){
         this.seeds.add(url);
     }
