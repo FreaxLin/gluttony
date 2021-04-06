@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author ：linweisen
@@ -28,11 +29,15 @@ public class MmapBlockingQueue<E> extends AbstractQueue<E>
 
     private CrawlerConfig config;
 
-//    private final Condition notEmpty;
+    private final Condition notEmpty;
+
+    private final ReentrantLock lock;
 
     public MmapBlockingQueue(CrawlerConfig config, Serializer<E> serializer) {
         this.config = config;
         queues = new PreCrawlUrlQueue<>(config, serializer);
+        this.lock = new ReentrantLock();
+        this.notEmpty = this.lock.newCondition();
     }
 
     @Override
@@ -66,10 +71,13 @@ public class MmapBlockingQueue<E> extends AbstractQueue<E>
     @NotNull
     @Override
     public E take() throws InterruptedException {
-        if (this.queues.size() == 0){
-
+        try {
+            while (this.queues.size() == 0)
+                notEmpty.await();
+            return dequeue();
+        } finally {
+            lock.unlock();
         }
-        return this.queues.poll();
     }
 
     @Nullable
@@ -110,6 +118,10 @@ public class MmapBlockingQueue<E> extends AbstractQueue<E>
 
     private boolean enqueue(E x) {
         return queues.put(x);
+    }
+
+    private E dequeue(){
+        return this.queues.poll();
     }
 
     private static void checkNotNull(Object v) {

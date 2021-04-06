@@ -9,6 +9,8 @@ import top.interc.crawler.executor.CrawlExecutor;
 import top.interc.crawler.executor.CrawlTask;
 import top.interc.crawler.storage.PreCrawlUrlQueue;
 
+import java.util.concurrent.Executors;
+
 /**
  * @author ：linweisen
  * @date ：Created in 2021/4/2 20:24
@@ -33,6 +35,5 @@ public class TestExecutor {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        executor.execute(new CrawlTask(RandomStringUtils.randomAlphabetic(10)));
     }
 }

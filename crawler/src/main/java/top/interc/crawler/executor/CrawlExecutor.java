@@ -13,7 +13,7 @@ import java.util.concurrent.*;
  */
 public class CrawlExecutor{
 
-    private ExecutorService chartExecutor;
+    private ExecutorService crawlExecutor;
 
     private CrawlerConfig config;
 
@@ -21,7 +21,7 @@ public class CrawlExecutor{
 
     public CrawlExecutor(CrawlerConfig config) {
         int threadNum = config.getCrawlerNumber();
-        this.chartExecutor = new ThreadPoolExecutor(threadNum, threadNum,
+        this.crawlExecutor = new ThreadPoolExecutor(threadNum, threadNum,
                 0L, TimeUnit.MILLISECONDS,
 //                new MmapBlockingQueue(config, new CrawlTaskSerializer()),
                 new ArrayBlockingQueue<>(10),
@@ -30,6 +30,6 @@ public class CrawlExecutor{
     }
 
     public void execute(CrawlTask task){
-        this.chartExecutor.execute(task);
+        this.crawlExecutor.execute(task);
     }
 }
