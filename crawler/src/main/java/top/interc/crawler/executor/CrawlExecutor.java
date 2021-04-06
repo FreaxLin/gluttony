@@ -1,6 +1,6 @@
 package top.interc.crawler.executor;
 
-import top.interc.crawler.controller.CrawlerConfig;
+import top.interc.crawler.controller.CrawlConfig;
 
 import java.util.concurrent.*;
 
@@ -15,11 +15,11 @@ public class CrawlExecutor{
 
     private ExecutorService crawlExecutor;
 
-    private CrawlerConfig config;
+    private CrawlConfig config;
 
 
 
-    public CrawlExecutor(CrawlerConfig config) {
+    public CrawlExecutor(CrawlConfig config) {
         int threadNum = config.getCrawlerNumber();
         this.crawlExecutor = new ThreadPoolExecutor(threadNum, threadNum,
                 0L, TimeUnit.MILLISECONDS,

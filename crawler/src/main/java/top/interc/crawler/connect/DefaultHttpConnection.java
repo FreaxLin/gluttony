@@ -19,17 +19,13 @@ import org.apache.http.ssl.SSLContexts;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import top.interc.crawler.controller.CrawlerConfig;
+import top.interc.crawler.controller.CrawlConfig;
 
 import javax.net.ssl.SSLContext;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.KeyManagementException;
-import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
 
@@ -37,12 +33,12 @@ public class DefaultHttpConnection implements HttpConnection {
 
     protected static final Logger logger = LoggerFactory.getLogger(DefaultHttpConnection.class);
 
-    protected final CrawlerConfig config;
+    protected final CrawlConfig config;
     protected PoolingHttpClientConnectionManager connectionManager;
     protected CloseableHttpClient httpClient;
     protected IdleConnectionMonitorThread connectionMonitorThread = null;
 
-    public DefaultHttpConnection(CrawlerConfig config) throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+    public DefaultHttpConnection(CrawlConfig config) throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         this.config = config;
         RequestConfig requestConfig = RequestConfig.custom()
                 .setExpectContinueEnabled(false)

@@ -1,6 +1,6 @@
 package top.interc.crawler.controller;
 
-public class CrawlerConfig {
+public class CrawlConfig {
 
     private String crawlStorageFolder;
 
@@ -20,7 +20,7 @@ public class CrawlerConfig {
 
     private String cookiePolicy = "";
 
-    private boolean includeHttpsPage;
+    private boolean includeHttpsPage = true;
 
     public boolean isIncludeHttpsPage() {
         return includeHttpsPage;

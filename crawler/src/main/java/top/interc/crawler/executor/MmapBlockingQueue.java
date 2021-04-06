@@ -3,7 +3,7 @@ package top.interc.crawler.executor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.mapdb.Serializer;
-import top.interc.crawler.controller.CrawlerConfig;
+import top.interc.crawler.controller.CrawlConfig;
 import top.interc.crawler.storage.EmbeddedQueue;
 import top.interc.crawler.storage.PreCrawlUrlQueue;
 
@@ -27,13 +27,13 @@ public class MmapBlockingQueue<E> extends AbstractQueue<E>
 
     private EmbeddedQueue<E> queues;
 
-    private CrawlerConfig config;
+    private CrawlConfig config;
 
     private final Condition notEmpty;
 
     private final ReentrantLock lock;
 
-    public MmapBlockingQueue(CrawlerConfig config, Serializer<E> serializer) {
+    public MmapBlockingQueue(CrawlConfig config, Serializer<E> serializer) {
         this.config = config;
         queues = new PreCrawlUrlQueue<>(config, serializer);
         this.lock = new ReentrantLock();

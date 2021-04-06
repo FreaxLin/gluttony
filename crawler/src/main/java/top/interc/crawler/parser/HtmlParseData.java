@@ -25,11 +25,15 @@ import java.util.Set;
 public class HtmlParseData implements ParseData {
 
     private String html;
+
     private String text;
+
     private String title;
+
     private Map<String, String> metaTags;
 
     private Set<WebURL> outgoingUrls;
+
     private String contentCharset;
 
     public String getHtml() {

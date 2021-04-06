@@ -1,9 +1,8 @@
 import org.junit.Before;
 import org.junit.Test;
 import top.interc.crawler.connect.DefaultHttpConnection;
-import top.interc.crawler.connect.HttpRequest;
 import top.interc.crawler.connect.HttpResult;
-import top.interc.crawler.controller.CrawlerConfig;
+import top.interc.crawler.controller.CrawlConfig;
 
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -26,7 +25,7 @@ public class TestHttpConnection {
 
     @Before
     public void before(){
-        testUrls.add("http://www.baidu.com");
+        testUrls.add("https://www.baidu.com/s?wd=apple&pn=1&rn=10&tn=json");
         testUrls.add("https://zhuanlan.zhihu.com/p/41322638");
         testUrls.add("https://blog.csdn.net/u014133299/article/details/80676147");
         testUrls.add("https://github.com/FreaxLin/gluttony");
@@ -34,7 +33,7 @@ public class TestHttpConnection {
 
     @Test
     public void test() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
-        CrawlerConfig config = new CrawlerConfig();
+        CrawlConfig config = new CrawlConfig();
 
         DefaultHttpConnection connection = new DefaultHttpConnection(config);
         try {

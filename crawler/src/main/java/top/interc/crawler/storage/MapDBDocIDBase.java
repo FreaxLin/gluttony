@@ -6,7 +6,7 @@ import com.google.common.hash.Funnels;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import org.mapdb.Serializer;
-import top.interc.crawler.controller.CrawlerConfig;
+import top.interc.crawler.controller.CrawlConfig;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
@@ -18,7 +18,7 @@ public class MapDBDocIDBase implements DocIDService {
 
     private BloomFilter<CharSequence> bloomFilter;
 
-    private CrawlerConfig crawlerConfig;
+    private CrawlConfig CrawlConfig;
 
     private static final String DATABASE_NAME = "DocIDs";
 
@@ -26,9 +26,9 @@ public class MapDBDocIDBase implements DocIDService {
 
     private ConcurrentMap<String, Integer> docIDMap;
 
-    public MapDBDocIDBase(CrawlerConfig crawlerConfig) {
+    public MapDBDocIDBase(CrawlConfig CrawlConfig) {
 
-        String urlCrawFile = crawlerConfig.getCrawlStorageFolder() + "/id";
+        String urlCrawFile = CrawlConfig.getCrawlStorageFolder() + "/id";
 
         DB db = DBMaker.fileDB(urlCrawFile)
                 .fileMmapEnableIfSupported()
@@ -49,7 +49,7 @@ public class MapDBDocIDBase implements DocIDService {
         BloomFilter<CharSequence> bloomFilter = BloomFilter.create(Funnels.stringFunnel(Charsets.UTF_8), 200000, 1E-7);
         int max = 0;
         //恢复布隆过滤器
-        if (crawlerConfig.isResumableCrawling()){
+        if (CrawlConfig.isResumableCrawling()){
             for (Map.Entry<String, Integer> entry : docIDMap.entrySet()){
                 bloomFilter.put(entry.getKey());
                 if (entry.getValue() > max){

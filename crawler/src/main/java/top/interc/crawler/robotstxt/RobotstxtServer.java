@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 import top.interc.crawler.connect.HttpConnection;
 import top.interc.crawler.connect.HttpResult;
 import top.interc.crawler.url.WebURL;
-import top.interc.crawler.controller.CrawlerConfig;
+import top.interc.crawler.controller.CrawlConfig;
 import top.interc.crawler.controller.Page;
 import top.interc.crawler.exceptions.PageBiggerThanMaxSizeException;
 import top.interc.crawler.util.Util;
@@ -42,7 +42,7 @@ public class RobotstxtServer {
 
     protected RobotstxtConfig config;
 
-    protected CrawlerConfig crawlConfig;
+    protected CrawlConfig crawlConfig;
 
     protected final Map<String, HostDirectives> host2directivesCache = new HashMap<>();
 
@@ -200,7 +200,7 @@ public class RobotstxtServer {
         return directives;
     }
 
-    public void setCrawlConfig(CrawlerConfig crawlConfig) {
+    public void setCrawlConfig(CrawlConfig crawlConfig) {
         this.crawlConfig = crawlConfig;
     }
 }

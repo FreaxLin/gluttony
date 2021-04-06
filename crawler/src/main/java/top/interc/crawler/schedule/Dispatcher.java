@@ -2,7 +2,7 @@ package top.interc.crawler.schedule;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import top.interc.crawler.controller.CrawlerConfig;
+import top.interc.crawler.controller.CrawlConfig;
 
 import top.interc.crawler.executor.CrawlTask;
 import top.interc.crawler.executor.CrawlTaskSerializer;
@@ -22,7 +22,7 @@ public class Dispatcher {
 
     private static final int IN_PROCESS_RESCHEDULE_BATCH_SIZE = 100;
 
-    private CrawlerConfig config;
+    private CrawlConfig config;
 
     private EmbeddedQueue<CrawlTask> queues;
 
@@ -36,7 +36,7 @@ public class Dispatcher {
 
     protected Counters counters;
 
-    public Dispatcher(CrawlerConfig config) {
+    public Dispatcher(CrawlConfig config) {
         this.config = config;
         this.queues = new PreCrawlUrlQueue<>(config, new CrawlTaskSerializer());
         this.docIDService = new MapDBDocIDBase(config);

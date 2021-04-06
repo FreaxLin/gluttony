@@ -3,7 +3,7 @@ package queue;
 import org.junit.Before;
 import org.junit.Test;
 import org.mapdb.Serializer;
-import top.interc.crawler.controller.CrawlerConfig;
+import top.interc.crawler.controller.CrawlConfig;
 import top.interc.crawler.executor.CrawlTask;
 import top.interc.crawler.executor.CrawlTaskSerializer;
 import top.interc.crawler.storage.EmbeddedQueue;
@@ -22,7 +22,7 @@ public class EmbedQueueTest {
 
     @Before
     public void before() {
-        CrawlerConfig config = new CrawlerConfig();
+        CrawlConfig config = new CrawlConfig();
         config.setCrawlStorageFolder("queue");
         this.queue = new PreCrawlUrlQueue<>(config, Serializer.STRING);
     }

@@ -2,7 +2,7 @@ package executor;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
-import top.interc.crawler.controller.CrawlerConfig;
+import top.interc.crawler.controller.CrawlConfig;
 import top.interc.crawler.executor.CrawlExecutor;
 import top.interc.crawler.executor.CrawlTask;
 
@@ -18,12 +18,11 @@ public class TestExecutor {
 
     @Test
     public void test(){
-        CrawlerConfig config = new CrawlerConfig();
+        CrawlConfig config = new CrawlConfig();
         config.setCrawlStorageFolder("queue");
         config.setCrawlerNumber(1);
         CrawlExecutor executor = new CrawlExecutor(config);
         for(int i = 0; i < 10; i++){
-
             executor.execute(new CrawlTask(RandomStringUtils.randomAlphabetic(10)));
         }
         try {

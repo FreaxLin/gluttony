@@ -21,7 +21,7 @@ package top.interc.crawler.parser;
 import org.apache.tika.language.LanguageIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import top.interc.crawler.controller.CrawlerConfig;
+import top.interc.crawler.controller.CrawlConfig;
 import top.interc.crawler.controller.Page;
 import top.interc.crawler.exceptions.ParseException;
 import top.interc.crawler.util.Util;
@@ -36,11 +36,11 @@ public class Parser {
 
     private static final Logger logger = LoggerFactory.getLogger(Parser.class);
 
-    private final CrawlerConfig config;
+    private final CrawlConfig config;
 
     private Map<String, CrawContentParse> contentParseMap = new HashMap<>();
 
-    public Parser(CrawlerConfig config) {
+    public Parser(CrawlConfig config) {
         this.config = config;
 
     }
