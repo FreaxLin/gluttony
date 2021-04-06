@@ -106,4 +106,9 @@ public class HtmlParseData implements ParseData {
     public Map<String, String> getHeaders() {
         return null;
     }
+
+    @Override
+    public String getUrl() {
+        return null;
+    }
 }

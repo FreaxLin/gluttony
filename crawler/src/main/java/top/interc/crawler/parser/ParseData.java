@@ -10,4 +10,6 @@ public interface ParseData {
     public ParseDataType getType();
 
     public Map<String, String> getHeaders();
+
+    public String getUrl();
 }
