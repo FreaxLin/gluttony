@@ -26,7 +26,7 @@ public class TestExecutor {
             executor.execute(new CrawlTask(RandomStringUtils.randomAlphabetic(10)));
         }
         try {
-            Thread.sleep(3000);
+            Thread.sleep(3000000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -31,7 +31,7 @@ public class CrawlhreadFactory implements ThreadFactory {
         Thread t = new Thread(group, r,
                 namePrefix + threadNumber.getAndIncrement(),
                 0);
-        t.setDaemon(true);
+        t.setDaemon(false);
         t.setUncaughtExceptionHandler(new CrawlUncheckedExceptionHandler());
         return t;
     }

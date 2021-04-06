@@ -13,6 +13,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class CrawlRejectedExecutionHandler implements RejectedExecutionHandler {
     @Override
     public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
-
+        System.out.println(r);
     }
 }

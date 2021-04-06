@@ -57,20 +57,32 @@ public class MmapBlockingQueue<E> extends AbstractQueue<E>
     @Override
     public void put(@NotNull E e) throws InterruptedException {
         checkNotNull(e);
-        enqueue(e);
+        lock.lock();
+        try {
+            enqueue(e);
+        }finally {
+            lock.unlock();
+        }
+
 
     }
 
     @Override
     public boolean offer(E e, long timeout, @NotNull TimeUnit unit) throws InterruptedException {
         checkNotNull(e);
-        return enqueue(e);
+        lock.lock();
+        try {
+            return enqueue(e);
+        }finally {
+            lock.unlock();
+        }
 
     }
 
     @NotNull
     @Override
     public E take() throws InterruptedException {
+        lock.lock();
         try {
             while (this.queues.size() == 0)
                 notEmpty.await();
@@ -83,7 +95,19 @@ public class MmapBlockingQueue<E> extends AbstractQueue<E>
     @Nullable
     @Override
     public E poll(long timeout, @NotNull TimeUnit unit) throws InterruptedException {
-        return null;
+        long nanos = unit.toNanos(timeout);
+        final ReentrantLock lock = this.lock;
+        lock.lockInterruptibly();
+        try {
+            while (this.queues.size() == 0) {
+                if (nanos <= 0)
+                    return null;
+                nanos = notEmpty.awaitNanos(nanos);
+            }
+            return dequeue();
+        } finally {
+            lock.unlock();
+        }
     }
 
     @Override
@@ -103,7 +127,12 @@ public class MmapBlockingQueue<E> extends AbstractQueue<E>
 
     @Override
     public boolean offer(E e) {
-        return false;
+        lock.lock();
+        try {
+            return enqueue(e);
+        }finally {
+            lock.unlock();
+        }
     }
 
     @Override
@@ -117,7 +146,9 @@ public class MmapBlockingQueue<E> extends AbstractQueue<E>
     }
 
     private boolean enqueue(E x) {
-        return queues.put(x);
+        queues.put(x);
+        notEmpty.signal();
+        return true;
     }
 
     private E dequeue(){

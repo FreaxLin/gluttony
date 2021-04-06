@@ -72,17 +72,14 @@ public class HtmlParseData implements ParseData {
         return metaTags.getOrDefault(metaTag, "");
     }
 
-    @Override
     public Set<WebURL> getOutgoingUrls() {
         return outgoingUrls;
     }
 
-    @Override
     public void setOutgoingUrls(Set<WebURL> outgoingUrls) {
         this.outgoingUrls = outgoingUrls;
     }
 
-    @Override
     public String toString() {
         return text;
     }
@@ -93,5 +90,20 @@ public class HtmlParseData implements ParseData {
 
     public String getContentCharset() {
         return contentCharset;
+    }
+
+    @Override
+    public String getContent() {
+        return null;
+    }
+
+    @Override
+    public ParseDataType getType() {
+        return null;
+    }
+
+    @Override
+    public Map<String, String> getHeaders() {
+        return null;
     }
 }

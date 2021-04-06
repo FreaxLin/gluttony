@@ -33,8 +33,11 @@ public class EmbedQueueTest {
         for (int i = 0; i < 10000; i++){
             queue.put(url);
         }
-
+        for (int i = 0; i < 10000; i++){
+            System.out.println(queue.poll());
+        }
         System.out.println("end");
+
 //        CrawlTask task1 = queue.getFirst();
 //        System.out.println(task1.getUrl());
 //        task1 = queue.getFirst();

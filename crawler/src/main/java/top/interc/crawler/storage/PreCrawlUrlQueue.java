@@ -30,12 +30,11 @@ public class PreCrawlUrlQueue<T> implements EmbeddedQueue<T>{
                 .cleanerHackEnable()
                 .checksumHeaderBypass()
                 .closeOnJvmShutdown()
-                .transactionEnable()
+//                .transactionEnable()
                 .concurrencyScale(128)
                 .make();
 
         this.urlQueue = this.db.indexTreeList(DATABASE_NAME, serializer).createOrOpen();
-        System.out.println("success");
     }
 
 
@@ -43,7 +42,7 @@ public class PreCrawlUrlQueue<T> implements EmbeddedQueue<T>{
     public boolean put(T data) {
         this.urlQueue.add(data);
         this.db.commit();
-        return false;
+        return true;
     }
 
     @Override
@@ -69,6 +68,6 @@ public class PreCrawlUrlQueue<T> implements EmbeddedQueue<T>{
 
     @Override
     public int size() {
-        return 0;
+        return this.urlQueue.size();
     }
 }

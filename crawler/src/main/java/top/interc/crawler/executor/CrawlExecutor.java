@@ -17,14 +17,12 @@ public class CrawlExecutor{
 
     private CrawlConfig config;
 
-
-
     public CrawlExecutor(CrawlConfig config) {
         int threadNum = config.getCrawlerNumber();
         this.crawlExecutor = new ThreadPoolExecutor(threadNum, threadNum,
                 0L, TimeUnit.MILLISECONDS,
-//                new MmapBlockingQueue(config, new CrawlTaskSerializer()),
-                new ArrayBlockingQueue<>(10),
+                new MmapBlockingQueue(config, new CrawlTaskSerializer()),
+//                new ArrayBlockingQueue<>(10),
                 new CrawlhreadFactory(),
                 new CrawlRejectedExecutionHandler());
     }
