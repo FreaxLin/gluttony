@@ -20,13 +20,16 @@ public class CrawlExecutor{
 
 
     public CrawlExecutor(CrawlerConfig config) {
-//        int threadNum = config.getCrawlerNumber();
-//        this.chartExecutor = new ThreadPoolExecutor(threadNum, threadNum,
-//                0L, TimeUnit.MILLISECONDS,
-//                new MmapBlockingQueue<>(config, new CrawlTaskSerializer()),
-//                new CrawlhreadFactory(),
-//                new CrawlRejectedExecutionHandler());
+        int threadNum = config.getCrawlerNumber();
+        this.chartExecutor = new ThreadPoolExecutor(threadNum, threadNum,
+                0L, TimeUnit.MILLISECONDS,
+//                new MmapBlockingQueue(config, new CrawlTaskSerializer()),
+                new ArrayBlockingQueue<>(10),
+                new CrawlhreadFactory(),
+                new CrawlRejectedExecutionHandler());
     }
 
-
+    public void execute(CrawlTask task){
+        this.chartExecutor.execute(task);
+    }
 }

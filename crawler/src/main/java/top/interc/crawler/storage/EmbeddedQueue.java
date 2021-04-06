@@ -8,6 +8,8 @@ public interface EmbeddedQueue<T> {
 
     public T getLast();
 
+    public T poll();
+
     public T get(int index);
 
     public int size();

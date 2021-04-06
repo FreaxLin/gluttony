@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.Condition;
 
 /**
  * @author ：linweisen
@@ -27,6 +27,8 @@ public class MmapBlockingQueue<E> extends AbstractQueue<E>
     private EmbeddedQueue<E> queues;
 
     private CrawlerConfig config;
+
+//    private final Condition notEmpty;
 
     public MmapBlockingQueue(CrawlerConfig config, Serializer<E> serializer) {
         this.config = config;
@@ -64,7 +66,10 @@ public class MmapBlockingQueue<E> extends AbstractQueue<E>
     @NotNull
     @Override
     public E take() throws InterruptedException {
-        return null;
+        if (this.queues.size() == 0){
+
+        }
+        return this.queues.poll();
     }
 
     @Nullable

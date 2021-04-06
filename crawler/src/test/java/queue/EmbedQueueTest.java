@@ -2,6 +2,7 @@ package queue;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mapdb.Serializer;
 import top.interc.crawler.controller.CrawlerConfig;
 import top.interc.crawler.executor.CrawlTask;
 import top.interc.crawler.executor.CrawlTaskSerializer;
@@ -17,21 +18,26 @@ import top.interc.crawler.storage.PreCrawlUrlQueue;
  */
 public class EmbedQueueTest {
 
-    private EmbeddedQueue<CrawlTask> queue ;
+    private EmbeddedQueue<String> queue ;
 
     @Before
     public void before() {
         CrawlerConfig config = new CrawlerConfig();
-        config.setCrawlStorageFolder("./folder");
-        this.queue = new PreCrawlUrlQueue<>(config, new CrawlTaskSerializer());
+        config.setCrawlStorageFolder("queue");
+        this.queue = new PreCrawlUrlQueue<>(config, Serializer.STRING);
     }
 
     @Test
     public void test(){
         String url = "www.crawl.com";
-        CrawlTask task = new CrawlTask(url);
-        queue.put(task);
-        CrawlTask task1 = queue.getFirst();
-        System.out.println(task1.getUrl());
+        for (int i = 0; i < 10000; i++){
+            queue.put(url);
+        }
+
+        System.out.println("end");
+//        CrawlTask task1 = queue.getFirst();
+//        System.out.println(task1.getUrl());
+//        task1 = queue.getFirst();
+//        System.out.println(task1.getUrl());
     }
 }

@@ -28,18 +28,21 @@ public class PreCrawlUrlQueue<T> implements EmbeddedQueue<T>{
                 .fileMmapEnableIfSupported()
                 .fileMmapPreclearDisable()
                 .cleanerHackEnable()
+                .checksumHeaderBypass()
                 .closeOnJvmShutdown()
                 .transactionEnable()
                 .concurrencyScale(128)
                 .make();
 
         this.urlQueue = this.db.indexTreeList(DATABASE_NAME, serializer).createOrOpen();
+        System.out.println("success");
     }
 
 
     @Override
     public boolean put(T data) {
         this.urlQueue.add(data);
+        this.db.commit();
         return false;
     }
 
@@ -51,6 +54,12 @@ public class PreCrawlUrlQueue<T> implements EmbeddedQueue<T>{
     @Override
     public T getLast() {
         return null;
+    }
+
+    @Override
+    public T poll() {
+        T t = this.urlQueue.remove(0);
+        return t;
     }
 
     @Override
