@@ -29,6 +29,19 @@ public class CrawlConfig {
 
     private String baseCrawlClazzName = "top.interc.crawler.executor.SimpleCrawlTask";
 
+    /**
+     * 每个线程爬取的间隔时间，单位为ms
+     */
+    private int sleepTime = 2000;
+
+    public int getSleepTime() {
+        return sleepTime;
+    }
+
+    public void setSleepTime(int sleepTime) {
+        this.sleepTime = sleepTime;
+    }
+
     public String getBaseCrawlClazzName() {
         return baseCrawlClazzName;
     }

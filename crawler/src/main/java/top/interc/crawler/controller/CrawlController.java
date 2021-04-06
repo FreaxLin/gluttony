@@ -39,7 +39,7 @@ public class CrawlController {
         this.status = new CountDownLatch(1);
         List<String> seeds = config.getSeeds();
         for (String url : seeds){
-            CrawlTask task = CrawlTaskFactory.build(className, url);
+            CrawlTask task = CrawlTaskFactory.build(className, url, config);
             task.setConnection(this.connection);
             this.crawlExecutor.execute(task);
         }

@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import org.mapdb.IndexTreeList;
+import top.interc.crawler.controller.CrawlConfig;
 import top.interc.crawler.executor.CrawlTask;
 import top.interc.crawler.executor.CrawlTaskSerializer;
 import top.interc.crawler.executor.SimpleCrawlTask;
@@ -30,7 +31,7 @@ public class MapDbTest {
                 .make();
 
         IndexTreeList<CrawlTask> s = db.indexTreeList("test", new CrawlTaskSerializer()).createOrOpen();
-        CrawlTask task = new SimpleCrawlTask("www.bai.com");
+        CrawlTask task = new SimpleCrawlTask("www.bai.com", new CrawlConfig());
 
         s.add(task);
         db.commit();

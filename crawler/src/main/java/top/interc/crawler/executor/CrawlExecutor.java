@@ -22,7 +22,7 @@ public class CrawlExecutor{
         int threadNum = config.getCrawlerNumber();
         this.crawlExecutor = new ThreadPoolExecutor(threadNum, threadNum,
                 0L, TimeUnit.MILLISECONDS,
-                new MmapBlockingQueue(config, new CrawlTaskSerializer(connection)),
+                new MmapBlockingQueue(config, new CrawlTaskSerializer(connection, config)),
                 new CrawlhreadFactory(),
                 new CrawlRejectedExecutionHandler());
     }

@@ -1,5 +1,6 @@
 package top.interc.crawler.executor;
 
+import top.interc.crawler.controller.CrawlConfig;
 import top.interc.crawler.parser.ParseData;
 
 /**
@@ -11,8 +12,8 @@ import top.interc.crawler.parser.ParseData;
  */
 public class SimpleCrawlTask extends CrawlTask {
 
-    public SimpleCrawlTask(String url) {
-        super(url);
+    public SimpleCrawlTask(String url, CrawlConfig config) {
+        super(url, config);
     }
 
     @Override

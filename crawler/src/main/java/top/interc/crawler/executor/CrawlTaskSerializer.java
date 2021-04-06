@@ -5,6 +5,7 @@ import org.mapdb.DataInput2;
 import org.mapdb.DataOutput2;
 import org.mapdb.Serializer;
 import top.interc.crawler.connect.HttpConnection;
+import top.interc.crawler.controller.CrawlConfig;
 
 import java.io.IOException;
 
@@ -21,8 +22,11 @@ public class CrawlTaskSerializer implements Serializer<CrawlTask> {
 
     private String className = "top.interc.crawler.executor.SimpleCrawlTask";
 
-    public CrawlTaskSerializer(HttpConnection connection) {
+    private CrawlConfig config;
+
+    public CrawlTaskSerializer(HttpConnection connection, CrawlConfig config) {
         this.connection = connection;
+        this.config = config;
     }
 
     public CrawlTaskSerializer() {
@@ -39,7 +43,7 @@ public class CrawlTaskSerializer implements Serializer<CrawlTask> {
             return null;
         }else{
             String url = dataInput2.readUTF();
-            CrawlTask task = CrawlTaskFactory.build(className, url);
+            CrawlTask task = CrawlTaskFactory.build(className, url, config);
             task.setConnection(connection);
             return task;
         }

@@ -24,7 +24,7 @@ public class TestExecutor {
         config.setCrawlerNumber(1);
         CrawlExecutor executor = new CrawlExecutor(config, null);
         for(int i = 0; i < 10; i++){
-            executor.execute(new SimpleCrawlTask(RandomStringUtils.randomAlphabetic(10)));
+            executor.execute(new SimpleCrawlTask(RandomStringUtils.randomAlphabetic(10), config));
         }
         try {
             Thread.sleep(3000000);
