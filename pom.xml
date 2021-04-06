@@ -13,39 +13,16 @@
     </modules>
     <packaging>pom</packaging>
     
-    <repositories>
-        <repository>
-            <id>aliyun</id>
-            <name>aliyun Repository</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>HuaweiCloudSDK</id>
-            <url>https://mirrors.huaweicloud.com/repository/maven/huaweicloudsdk/</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>unicom</id>
-            <name>unicom soft</name>
-            <url>http://10.117.156.86:9081/repository/maven-public/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>yonyoucloud</id>
-            <name>yonyoucloud Repository</name>
-            <url>http://maven.yonyoucloud.com/nexus/content/repositories/releases/</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+    <!--<repositories>-->
+        <!--<repository>-->
+            <!--<id>aliyun</id>-->
+            <!--<name>aliyun Repository</name>-->
+            <!--<url>http://maven.aliyun.com/nexus/content/groups/public/</url>-->
+            <!--<snapshots>-->
+                <!--<enabled>false</enabled>-->
+            <!--</snapshots>-->
+        <!--</repository>-->
+    <!--</repositories>-->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
