@@ -44,6 +44,9 @@ public class CrawlController {
             this.crawlExecutor.execute(task);
         }
 
+        MonitorThread monitorThread = new MonitorThread(status, this.crawlExecutor);
+        Thread thread = new Thread(monitorThread);
+        thread.start();
         try {
             status.await();
         } catch (InterruptedException e) {

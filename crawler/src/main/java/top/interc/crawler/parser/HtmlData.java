@@ -11,8 +11,6 @@ import java.util.Map;
  */
 public class HtmlData implements ParseData {
 
-
-
     @Override
     public String getContent() {
         return null;

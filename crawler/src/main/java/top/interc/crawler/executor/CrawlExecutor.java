@@ -14,7 +14,7 @@ import java.util.concurrent.*;
  */
 public class CrawlExecutor{
 
-    private ExecutorService crawlExecutor;
+    private ThreadPoolExecutor crawlExecutor;
 
     private CrawlConfig config;
 
@@ -23,9 +23,17 @@ public class CrawlExecutor{
         this.crawlExecutor = new ThreadPoolExecutor(threadNum, threadNum,
                 0L, TimeUnit.MILLISECONDS,
                 new MmapBlockingQueue(config, new CrawlTaskSerializer(connection, config)),
-                new CrawlhreadFactory(),
+                new CrawlThreadFactory(),
                 new CrawlRejectedExecutionHandler());
     }
+
+    public int getActiveThread(){
+        return this.crawlExecutor.getActiveCount();
+    }
+
+//    public int get(){
+//        this.crawlExecutor.get();
+//    }
 
     public void execute(CrawlTask task){
         this.crawlExecutor.execute(task);

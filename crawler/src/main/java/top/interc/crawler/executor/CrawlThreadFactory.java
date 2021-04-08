@@ -11,14 +11,14 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @modified By：
  * @version: 1.0
  */
-public class CrawlhreadFactory implements ThreadFactory {
+public class CrawlThreadFactory implements ThreadFactory {
 
     private static final AtomicInteger poolNumber = new AtomicInteger(1);
     private final ThreadGroup group;
     private final AtomicInteger threadNumber = new AtomicInteger(1);
     private final String namePrefix;
 
-    public CrawlhreadFactory() {
+    public CrawlThreadFactory() {
         SecurityManager s = System.getSecurityManager();
         group = (s != null) ? s.getThreadGroup() :
                 Thread.currentThread().getThreadGroup();
