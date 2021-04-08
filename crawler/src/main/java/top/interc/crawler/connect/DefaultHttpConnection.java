@@ -1,9 +1,13 @@
 package top.interc.crawler.connect;
 
 import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
@@ -15,6 +19,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.impl.conn.SystemDefaultDnsResolver;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.ssl.SSLContexts;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
@@ -23,10 +28,14 @@ import top.interc.crawler.controller.CrawlConfig;
 
 import javax.net.ssl.SSLContext;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 
 public class DefaultHttpConnection implements HttpConnection {
@@ -92,8 +101,33 @@ public class DefaultHttpConnection implements HttpConnection {
     }
 
     @Override
-    public HttpResult post(HttpRequest httpRequest) {
-        return null;
+    public HttpResult post(HttpRequest httpRequest) throws IOException {
+        HttpPost post = new HttpPost(httpRequest.getUrl());
+        if (httpRequest.getPostParamList() != null){
+            List<NameValuePair> list = new ArrayList<>();
+
+            for (HttpRequest.PostParam param : httpRequest.getPostParamList()){
+                list.add(new BasicNameValuePair(param.getKey(), param.getValue()));
+            }
+            UrlEncodedFormEntity uefEntity = new UrlEncodedFormEntity(list, "UTF-8");
+            post.setEntity(uefEntity);
+        }
+        Map<String, String> headerMap = httpRequest.getHeaderMap();
+        for (Map.Entry<String, String> entry : headerMap.entrySet()){
+            post.addHeader(entry.getKey(), entry.getValue());
+        }
+        HttpResult httpResult = new HttpResult();
+        try {
+            CloseableHttpResponse response = httpClient.execute(post);
+            httpResult = parseResult(response);
+            return httpResult;
+
+        } finally {
+            if ((httpResult.getContent() == null) && (post != null)) {
+                post.abort();
+            }
+        }
+
     }
 
     @Override
@@ -104,15 +138,7 @@ public class DefaultHttpConnection implements HttpConnection {
             request = new HttpGet(url);
 
             CloseableHttpResponse response = httpClient.execute(request);
-            httpResult.setContent(EntityUtils.toString(response.getEntity()));
-
-            Header[] headers = response.getAllHeaders();
-            for (Header header : headers){
-                httpResult.addHeader(header.getName(), header.getValue());
-            }
-
-            httpResult.setCode(response.getStatusLine().getStatusCode());
-
+            httpResult = parseResult(response);
             return httpResult;
 
         } finally { // occurs also with thrown exceptions
@@ -120,5 +146,19 @@ public class DefaultHttpConnection implements HttpConnection {
                 request.abort();
             }
         }
+    }
+
+    private HttpResult parseResult(CloseableHttpResponse response) throws IOException {
+        HttpResult httpResult = new HttpResult();
+        httpResult.setContent(EntityUtils.toString(response.getEntity()));
+
+        Header[] headers = response.getAllHeaders();
+        for (Header header : headers){
+            httpResult.addHeader(header.getName(), header.getValue());
+        }
+
+        httpResult.setCode(response.getStatusLine().getStatusCode());
+
+        return httpResult;
     }
 }
