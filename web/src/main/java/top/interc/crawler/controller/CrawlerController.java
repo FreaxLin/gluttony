@@ -1,10 +1,11 @@
 package top.interc.crawler.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import top.interc.crawler.model.request.CrawlRequest;
+import top.interc.model.CrawlRequest;
 
 /**
  * @author ：linweisen
@@ -17,9 +18,11 @@ import top.interc.crawler.model.request.CrawlRequest;
 @RequestMapping("/crawl")
 public class CrawlerController {
 
+    @Autowired
+    public CrawlController crawlController;
 
     @PostMapping("/submit")
     public boolean submit(@RequestBody CrawlRequest request){
-        return true;
+        return crawlController.submit();
     }
 }

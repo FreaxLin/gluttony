@@ -29,7 +29,7 @@ public class HttpTest {
         HttpRequest request = new HttpRequest();
         request.setUrl("https://www.lagou.com/jobs/positionAjax.json?px=default&city=%E7%8F%A0%E6%B5%B7&needAddtionalResult=false");
         request.addParam("first", "false");
-        request.addParam("pn", "2");
+        request.addParam("pn", "1000");
         request.addParam("kd", "Java");
         request.addParam("sid", "6f29275825b84c019e8e96edcec087a2");
 

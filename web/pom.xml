@@ -36,6 +36,16 @@
     </dependencyManagement>
     <dependencies>
         <dependency>
+            <groupId>top.interc</groupId>
+            <artifactId>crawler</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>top.interc</groupId>
+            <artifactId>model</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
@@ -117,8 +127,6 @@
             <version>2.9.0</version>
         </dependency>
 
-
-
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
@@ -134,16 +142,8 @@
             <artifactId>jackson-databind</artifactId>
             <version>${jackjson.version}</version>
         </dependency>
-        <dependency>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>athena</artifactId>
-        </dependency>
-        <!--  -->
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>${httpclient.version}</version>
-        </dependency>
+
+
         <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>ST4</artifactId>

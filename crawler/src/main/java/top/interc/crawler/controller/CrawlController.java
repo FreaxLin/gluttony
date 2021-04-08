@@ -7,6 +7,7 @@ import top.interc.crawler.connect.HttpConnection;
 import top.interc.crawler.executor.CrawlExecutor;
 import top.interc.crawler.executor.CrawlTask;
 import top.interc.crawler.executor.CrawlTaskFactory;
+import top.interc.model.CrawlRequest;
 
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
@@ -58,5 +59,10 @@ public class CrawlController {
             e.printStackTrace();
         }
 
+    }
+
+    public boolean submit(CrawlRequest request){
+
+        return false;
     }
 }

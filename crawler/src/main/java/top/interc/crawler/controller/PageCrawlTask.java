@@ -3,6 +3,7 @@ package top.interc.crawler.controller;
 import top.interc.crawler.connect.HttpConnection;
 import top.interc.crawler.connect.HttpRequest;
 import top.interc.crawler.connect.HttpResult;
+import top.interc.crawler.util.JsonMapper;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -27,6 +28,8 @@ public class PageCrawlTask implements Runnable {
 
     private Map<String, String> param = new HashMap<>();
 
+
+
     @Override
     public void run() {
 
@@ -43,11 +46,14 @@ public class PageCrawlTask implements Runnable {
             HttpResult result = null;
             try {
                 result = connection.post(request);
+                if (result.getContent() != null){
+                    JsonMapper.getInstance().fromJson(result.getContent(), Map.class);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
         }
     }
+
+
 }
