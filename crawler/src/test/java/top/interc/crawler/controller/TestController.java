@@ -1,8 +1,6 @@
-package controller;
+package top.interc.crawler.controller;
 
 import org.junit.Test;
-import top.interc.crawler.controller.CrawlConfig;
-import top.interc.crawler.controller.CrawlController;
 
 /**
  * @author ：linweisen

@@ -3,9 +3,11 @@ package executor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 import top.interc.crawler.controller.CrawlConfig;
-import top.interc.crawler.executor.CrawlExecutor;
-import top.interc.crawler.executor.CrawlTask;
-import top.interc.crawler.executor.SimpleCrawlTask;
+import top.interc.crawler.executor.*;
+
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -30,6 +32,31 @@ public class TestExecutor {
             Thread.sleep(3000000);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+    }
+
+
+    @Test
+    public void test1(){
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(1, 1,
+                0L, TimeUnit.MILLISECONDS,
+                new ArrayBlockingQueue<>(10),
+                new CrawlThreadFactory(),
+                new CrawlRejectedExecutionHandler());
+
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("end");
+            }
+        });
+        while (true){
+            System.out.println(executor.getActiveCount());
         }
     }
 }

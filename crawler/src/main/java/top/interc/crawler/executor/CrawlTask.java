@@ -3,10 +3,8 @@ package top.interc.crawler.executor;
 import top.interc.crawler.connect.HttpConnection;
 import top.interc.crawler.connect.HttpResult;
 import top.interc.crawler.controller.CrawlConfig;
-import top.interc.crawler.parser.ParseData;
 
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * @author ：linweisen
