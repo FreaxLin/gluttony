@@ -38,16 +38,11 @@ public abstract class CrawlTask implements Runnable {
 
     @Override
     public void run() {
-
         try {
             Thread.sleep(config.getSleepTime());
             filter(url);
             HttpResult result = connection.get(url);
-            Map<String, String> headerMap = result.getHeader();
-            String contentType = headerMap.get("Content-Type");
-            String[] values =contentType.split(";");
-
-            System.out.println(contentType);
+            save(result);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -63,7 +58,7 @@ public abstract class CrawlTask implements Runnable {
         this.connection = connection;
     }
 
-    public abstract void save(ParseData data);
+    public abstract void save(HttpResult data);
 
     public abstract void filter(String url);
 }

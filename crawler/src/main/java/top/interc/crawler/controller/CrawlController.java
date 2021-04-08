@@ -1,5 +1,7 @@
 package top.interc.crawler.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import top.interc.crawler.connect.DefaultHttpConnection;
 import top.interc.crawler.connect.HttpConnection;
 import top.interc.crawler.executor.CrawlExecutor;
@@ -13,6 +15,9 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 public class CrawlController {
+
+    public static Logger logger = LoggerFactory.getLogger(CrawlController.class);
+
 
     private CrawlConfig config;
 

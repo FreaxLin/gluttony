@@ -35,7 +35,6 @@ public class MonitorThread implements Runnable {
             try {
                 Thread.sleep(2000);
                 int active = executor.getActiveThread();
-                logger.info("活跃线程的数量{}", active);
                 if (active == 0){
                     int i = counter.incrementAndGet();
                     if (i == 5){

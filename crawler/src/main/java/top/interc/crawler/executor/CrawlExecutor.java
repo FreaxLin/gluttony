@@ -31,10 +31,6 @@ public class CrawlExecutor{
         return this.crawlExecutor.getActiveCount();
     }
 
-//    public int get(){
-//        this.crawlExecutor.get();
-//    }
-
     public void execute(CrawlTask task){
         this.crawlExecutor.execute(task);
     }

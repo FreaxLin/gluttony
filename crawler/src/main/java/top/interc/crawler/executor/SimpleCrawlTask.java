@@ -1,7 +1,7 @@
 package top.interc.crawler.executor;
 
+import top.interc.crawler.connect.HttpResult;
 import top.interc.crawler.controller.CrawlConfig;
-import top.interc.crawler.parser.ParseData;
 
 /**
  * @author ：linweisen
@@ -16,8 +16,10 @@ public class SimpleCrawlTask extends CrawlTask {
         super(url, config);
     }
 
+
+
     @Override
-    public void save(ParseData data) {
+    public void save(HttpResult data) {
         System.out.println("保存...");
     }
 
