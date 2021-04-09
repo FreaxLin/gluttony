@@ -12,6 +12,7 @@
         <module>analysis</module>
         <module>web</module>
         <module>model</module>
+        <module>task</module>
     </modules>
     <packaging>pom</packaging>
     
