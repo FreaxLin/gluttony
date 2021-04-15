@@ -4,10 +4,10 @@ import org.junit.Test;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import org.mapdb.IndexTreeList;
-import top.interc.crawler.controller.CrawlConfig;
-import top.interc.crawler.executor.CrawlTask;
-import top.interc.crawler.executor.CrawlTaskSerializer;
-import top.interc.crawler.executor.SimpleCrawlTask;
+import top.interc.gluttony.web.controller.CrawlConfig;
+import top.interc.gluttony.web.executor.CrawlTask;
+import top.interc.gluttony.web.executor.CrawlTaskSerializer;
+import top.interc.gluttony.web.executor.SimpleCrawlTask;
 
 
 /**

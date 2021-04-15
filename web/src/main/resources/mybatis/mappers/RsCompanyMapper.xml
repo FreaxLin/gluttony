@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.interc.gluttony.web.mapper.RsCompanyMapper">
+  <resultMap id="BaseResultMap" type="top.interc.gluttony.web.model.RsCompany">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="company_create_time" jdbcType="TIMESTAMP" property="companyCreateTime" />
+    <result column="trade" jdbcType="VARCHAR" property="trade" />
+    <result column="descrption" jdbcType="VARCHAR" property="descrption" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, company, code, company_create_time, trade, descrption, create_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rs_company
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from rs_company
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="top.interc.gluttony.web.model.RsCompany">
+    insert into rs_company (id, company, code, 
+      company_create_time, trade, descrption, 
+      create_date)
+    values (#{id,jdbcType=INTEGER}, #{company,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{companyCreateTime,jdbcType=TIMESTAMP}, #{trade,jdbcType=VARCHAR}, #{descrption,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="top.interc.gluttony.web.model.RsCompany" useGeneratedKeys="true" keyProperty="id">
+    insert into rs_company
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="company != null">
+        company,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="companyCreateTime != null">
+        company_create_time,
+      </if>
+      <if test="trade != null">
+        trade,
+      </if>
+      <if test="descrption != null">
+        descrption,
+      </if>
+
+        create_date
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="company != null">
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCreateTime != null">
+        #{companyCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="trade != null">
+        #{trade,jdbcType=VARCHAR},
+      </if>
+      <if test="descrption != null">
+        #{descrption,jdbcType=VARCHAR},
+      </if>
+      now()
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="top.interc.gluttony.web.model.RsCompany">
+    update rs_company
+    <set>
+      <if test="company != null">
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCreateTime != null">
+        company_create_time = #{companyCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="trade != null">
+        trade = #{trade,jdbcType=VARCHAR},
+      </if>
+      <if test="descrption != null">
+        descrption = #{descrption,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="top.interc.gluttony.web.model.RsCompany">
+    update rs_company
+    set company = #{company,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      company_create_time = #{companyCreateTime,jdbcType=TIMESTAMP},
+      trade = #{trade,jdbcType=VARCHAR},
+      descrption = #{descrption,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByCode" resultMap="BaseResultMap">
+    select * from rs_company where code = #{code}
+  </select>
+</mapper>

@@ -3,11 +3,9 @@ package queue;
 import org.junit.Before;
 import org.junit.Test;
 import org.mapdb.Serializer;
-import top.interc.crawler.controller.CrawlConfig;
-import top.interc.crawler.executor.CrawlTask;
-import top.interc.crawler.executor.CrawlTaskSerializer;
-import top.interc.crawler.storage.EmbeddedQueue;
-import top.interc.crawler.storage.PreCrawlUrlQueue;
+import top.interc.gluttony.web.controller.CrawlConfig;
+import top.interc.gluttony.web.storage.EmbeddedQueue;
+import top.interc.gluttony.web.storage.PreCrawlUrlQueue;
 
 /**
  * @author ：linweisen

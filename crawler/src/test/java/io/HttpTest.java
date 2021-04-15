@@ -1,11 +1,11 @@
 package io;
 
 import org.junit.Test;
-import top.interc.crawler.connect.DefaultHttpConnection;
-import top.interc.crawler.connect.HttpConnection;
-import top.interc.crawler.connect.HttpRequest;
-import top.interc.crawler.connect.HttpResult;
-import top.interc.crawler.controller.CrawlConfig;
+import top.interc.gluttony.web.connect.DefaultHttpConnection;
+import top.interc.gluttony.web.connect.HttpConnection;
+import top.interc.gluttony.web.connect.HttpRequest;
+import top.interc.gluttony.web.connect.HttpResult;
+import top.interc.gluttony.web.controller.CrawlConfig;
 
 import java.io.IOException;
 import java.security.KeyManagementException;

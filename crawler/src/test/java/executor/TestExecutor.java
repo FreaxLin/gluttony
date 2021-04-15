@@ -2,8 +2,11 @@ package executor;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
-import top.interc.crawler.controller.CrawlConfig;
-import top.interc.crawler.executor.*;
+import top.interc.gluttony.web.controller.CrawlConfig;
+import top.interc.gluttony.web.executor.CrawlExecutor;
+import top.interc.gluttony.web.executor.CrawlRejectedExecutionHandler;
+import top.interc.gluttony.web.executor.CrawlThreadFactory;
+import top.interc.gluttony.web.executor.SimpleCrawlTask;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;

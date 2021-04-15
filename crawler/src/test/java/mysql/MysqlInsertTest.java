@@ -1,8 +1,8 @@
 package mysql;
 
 import org.junit.Test;
-import top.interc.crawler.persistence.HikariPoolManager;
-import top.interc.crawler.persistence.PostMysqlStorage;
+import top.interc.gluttony.web.persistence.HikariPoolManager;
+import top.interc.gluttony.web.persistence.PostMysqlStorage;
 
 import java.io.IOException;
 import java.sql.SQLException;
