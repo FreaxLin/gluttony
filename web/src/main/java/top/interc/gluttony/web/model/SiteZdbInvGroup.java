@@ -1,5 +1,7 @@
 package top.interc.gluttony.web.model;
 
+import java.util.Date;
+
 public class SiteZdbInvGroup {
     private Integer id;
 
@@ -8,6 +10,10 @@ public class SiteZdbInvGroup {
     private String invGroupName;
 
     private String invGroupShowUrl;
+
+    private Date createDate;
+
+    private Date updateDate;
 
     public Integer getId() {
         return id;
@@ -39,5 +45,21 @@ public class SiteZdbInvGroup {
 
     public void setInvGroupShowUrl(String invGroupShowUrl) {
         this.invGroupShowUrl = invGroupShowUrl == null ? null : invGroupShowUrl.trim();
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
     }
 }

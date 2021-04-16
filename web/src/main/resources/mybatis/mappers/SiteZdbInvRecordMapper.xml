@@ -13,11 +13,11 @@
     <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, inv_time, inv_company, inv_turn, inv_money, inv_company_url, description_url, 
+    id, inv_time, inv_company, inv_turn, inv_money, inv_company_url, description_url,
     create_date, update_date
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from site_zdb_inv_record
     where id = #{id,jdbcType=INTEGER}
@@ -26,13 +26,13 @@
     delete from site_zdb_inv_record
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="top.interc.gluttony.web.model.SiteZdbInvRecord">
-    insert into site_zdb_inv_record (id, inv_time, inv_company, 
-      inv_turn, inv_money, inv_company_url, 
+  <insert id="insert" keyProperty="id" parameterType="top.interc.gluttony.web.model.SiteZdbInvRecord" useGeneratedKeys="true">
+    insert into site_zdb_inv_record (inv_time, inv_company,
+      inv_turn, inv_money, inv_company_url,
       description_url, create_date, update_date
       )
-    values (#{id,jdbcType=INTEGER}, #{invTime,jdbcType=VARCHAR}, #{invCompany,jdbcType=VARCHAR}, 
-      #{invTurn,jdbcType=VARCHAR}, #{invMoney,jdbcType=VARCHAR}, #{invCompanyUrl,jdbcType=VARCHAR}, 
+    values (#{invTime,jdbcType=VARCHAR}, #{invCompany,jdbcType=VARCHAR},
+      #{invTurn,jdbcType=VARCHAR}, #{invMoney,jdbcType=VARCHAR}, #{invCompanyUrl,jdbcType=VARCHAR},
       #{descriptionUrl,jdbcType=VARCHAR}, now(), now()
       )
       ON DUPLICATE KEY UPDATE

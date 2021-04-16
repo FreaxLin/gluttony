@@ -49,7 +49,7 @@ public class ZdbPedailyCnInvCrawlTask {
             SiteZdbPedailyCnInvestCompany company = investCompanyList.get(i);
             String url = "https://zdb.pedaily.cn/inv/v%s-p%s";
             try {
-                Thread.sleep(2000);
+//                Thread.sleep(2000);
                 int index = 1;
                 Document document = Jsoup.connect(String.format(url, company.getCode(), index)).get();
                 while (document != null){
@@ -79,7 +79,9 @@ public class ZdbPedailyCnInvCrawlTask {
                         }
 
                     }
-                    i++;
+                    index++;
+                    document = Jsoup.connect(String.format(url, company.getCode(), index)).get();
+
                 }
 
             } catch (Exception e) {

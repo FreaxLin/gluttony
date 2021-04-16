@@ -6,9 +6,11 @@
     <result column="inv_record_id" jdbcType="INTEGER" property="invRecordId" />
     <result column="inv_group_name" jdbcType="VARCHAR" property="invGroupName" />
     <result column="inv_group_show_url" jdbcType="VARCHAR" property="invGroupShowUrl" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, inv_record_id, inv_group_name, inv_group_show_url
+    id, inv_record_id, inv_group_name, inv_group_show_url, create_date, update_date
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -21,10 +23,14 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="top.interc.gluttony.web.model.SiteZdbInvGroup">
-    insert into site_zdb_inv_group (id, inv_record_id, inv_group_name, 
-      inv_group_show_url)
-    values (#{id,jdbcType=INTEGER}, #{invRecordId,jdbcType=INTEGER}, #{invGroupName,jdbcType=VARCHAR}, 
-      #{invGroupShowUrl,jdbcType=VARCHAR})
+    insert into site_zdb_inv_group (inv_record_id, inv_group_name,
+      inv_group_show_url, create_date, update_date
+      )
+    values (#{invRecordId,jdbcType=INTEGER}, #{invGroupName,jdbcType=VARCHAR},
+      #{invGroupShowUrl,jdbcType=VARCHAR}, now(), now()
+      )
+      ON DUPLICATE KEY UPDATE
+      update_date = now()
   </insert>
   <insert id="insertSelective" parameterType="top.interc.gluttony.web.model.SiteZdbInvGroup">
     insert into site_zdb_inv_group
@@ -41,6 +47,12 @@
       <if test="invGroupShowUrl != null">
         inv_group_show_url,
       </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -54,6 +66,12 @@
       </if>
       <if test="invGroupShowUrl != null">
         #{invGroupShowUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -69,6 +87,12 @@
       <if test="invGroupShowUrl != null">
         inv_group_show_url = #{invGroupShowUrl,jdbcType=VARCHAR},
       </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -76,7 +100,9 @@
     update site_zdb_inv_group
     set inv_record_id = #{invRecordId,jdbcType=INTEGER},
       inv_group_name = #{invGroupName,jdbcType=VARCHAR},
-      inv_group_show_url = #{invGroupShowUrl,jdbcType=VARCHAR}
+      inv_group_show_url = #{invGroupShowUrl,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
