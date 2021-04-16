@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.interc.gluttony.web.mapper.SiteZdbInvGroupMapper">
+  <resultMap id="BaseResultMap" type="top.interc.gluttony.web.model.SiteZdbInvGroup">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="inv_record_id" jdbcType="INTEGER" property="invRecordId" />
+    <result column="inv_group_name" jdbcType="VARCHAR" property="invGroupName" />
+    <result column="inv_group_show_url" jdbcType="VARCHAR" property="invGroupShowUrl" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, inv_record_id, inv_group_name, inv_group_show_url
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from site_zdb_inv_group
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from site_zdb_inv_group
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="top.interc.gluttony.web.model.SiteZdbInvGroup">
+    insert into site_zdb_inv_group (id, inv_record_id, inv_group_name, 
+      inv_group_show_url)
+    values (#{id,jdbcType=INTEGER}, #{invRecordId,jdbcType=INTEGER}, #{invGroupName,jdbcType=VARCHAR}, 
+      #{invGroupShowUrl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="top.interc.gluttony.web.model.SiteZdbInvGroup">
+    insert into site_zdb_inv_group
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="invRecordId != null">
+        inv_record_id,
+      </if>
+      <if test="invGroupName != null">
+        inv_group_name,
+      </if>
+      <if test="invGroupShowUrl != null">
+        inv_group_show_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="invRecordId != null">
+        #{invRecordId,jdbcType=INTEGER},
+      </if>
+      <if test="invGroupName != null">
+        #{invGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="invGroupShowUrl != null">
+        #{invGroupShowUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="top.interc.gluttony.web.model.SiteZdbInvGroup">
+    update site_zdb_inv_group
+    <set>
+      <if test="invRecordId != null">
+        inv_record_id = #{invRecordId,jdbcType=INTEGER},
+      </if>
+      <if test="invGroupName != null">
+        inv_group_name = #{invGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="invGroupShowUrl != null">
+        inv_group_show_url = #{invGroupShowUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="top.interc.gluttony.web.model.SiteZdbInvGroup">
+    update site_zdb_inv_group
+    set inv_record_id = #{invRecordId,jdbcType=INTEGER},
+      inv_group_name = #{invGroupName,jdbcType=VARCHAR},
+      inv_group_show_url = #{invGroupShowUrl,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

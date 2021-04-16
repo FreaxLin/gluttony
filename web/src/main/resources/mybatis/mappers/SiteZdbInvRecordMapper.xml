@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.interc.gluttony.web.mapper.SiteZdbInvRecordMapper">
+  <resultMap id="BaseResultMap" type="top.interc.gluttony.web.model.SiteZdbInvRecord">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="inv_time" jdbcType="VARCHAR" property="invTime" />
+    <result column="inv_company" jdbcType="VARCHAR" property="invCompany" />
+    <result column="inv_turn" jdbcType="VARCHAR" property="invTurn" />
+    <result column="inv_money" jdbcType="VARCHAR" property="invMoney" />
+    <result column="inv_company_url" jdbcType="VARCHAR" property="invCompanyUrl" />
+    <result column="description_url" jdbcType="VARCHAR" property="descriptionUrl" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="udpate_date" jdbcType="TIMESTAMP" property="udpateDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, inv_time, inv_company, inv_turn, inv_money, inv_company_url, description_url, 
+    create_date, udpate_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from site_zdb_inv_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from site_zdb_inv_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="top.interc.gluttony.web.model.SiteZdbInvRecord" useGeneratedKeys="true" keyProperty="id">
+
+    insert into site_zdb_inv_record (id, inv_time, inv_company, 
+      inv_turn, inv_money, inv_company_url, 
+      description_url, create_date, udpate_date
+      )
+    values (#{id,jdbcType=INTEGER}, #{invTime,jdbcType=VARCHAR}, #{invCompany,jdbcType=VARCHAR}, 
+      #{invTurn,jdbcType=VARCHAR}, #{invMoney,jdbcType=VARCHAR}, #{invCompanyUrl,jdbcType=VARCHAR}, 
+      #{descriptionUrl,jdbcType=VARCHAR}, now(), now()
+      )
+      ON DUPLICATE KEY UPDATE
+      update_date = now()
+  </insert>
+  <insert id="insertSelective" parameterType="top.interc.gluttony.web.model.SiteZdbInvRecord">
+    insert into site_zdb_inv_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="invTime != null">
+        inv_time,
+      </if>
+      <if test="invCompany != null">
+        inv_company,
+      </if>
+      <if test="invTurn != null">
+        inv_turn,
+      </if>
+      <if test="invMoney != null">
+        inv_money,
+      </if>
+      <if test="invCompanyUrl != null">
+        inv_company_url,
+      </if>
+      <if test="descriptionUrl != null">
+        description_url,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="udpateDate != null">
+        udpate_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="invTime != null">
+        #{invTime,jdbcType=VARCHAR},
+      </if>
+      <if test="invCompany != null">
+        #{invCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="invTurn != null">
+        #{invTurn,jdbcType=VARCHAR},
+      </if>
+      <if test="invMoney != null">
+        #{invMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="invCompanyUrl != null">
+        #{invCompanyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="descriptionUrl != null">
+        #{descriptionUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="udpateDate != null">
+        #{udpateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="top.interc.gluttony.web.model.SiteZdbInvRecord">
+    update site_zdb_inv_record
+    <set>
+      <if test="invTime != null">
+        inv_time = #{invTime,jdbcType=VARCHAR},
+      </if>
+      <if test="invCompany != null">
+        inv_company = #{invCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="invTurn != null">
+        inv_turn = #{invTurn,jdbcType=VARCHAR},
+      </if>
+      <if test="invMoney != null">
+        inv_money = #{invMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="invCompanyUrl != null">
+        inv_company_url = #{invCompanyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="descriptionUrl != null">
+        description_url = #{descriptionUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="udpateDate != null">
+        udpate_date = #{udpateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="top.interc.gluttony.web.model.SiteZdbInvRecord">
+    update site_zdb_inv_record
+    set inv_time = #{invTime,jdbcType=VARCHAR},
+      inv_company = #{invCompany,jdbcType=VARCHAR},
+      inv_turn = #{invTurn,jdbcType=VARCHAR},
+      inv_money = #{invMoney,jdbcType=VARCHAR},
+      inv_company_url = #{invCompanyUrl,jdbcType=VARCHAR},
+      description_url = #{descriptionUrl,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      udpate_date = #{udpateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
