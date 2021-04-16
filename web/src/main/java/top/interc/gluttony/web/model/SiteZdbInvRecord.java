@@ -19,7 +19,7 @@ public class SiteZdbInvRecord {
 
     private Date createDate;
 
-    private Date udpateDate;
+    private Date updateDate;
 
     public Integer getId() {
         return id;
@@ -85,11 +85,11 @@ public class SiteZdbInvRecord {
         this.createDate = createDate;
     }
 
-    public Date getUdpateDate() {
-        return udpateDate;
+    public Date getUpdateDate() {
+        return updateDate;
     }
 
-    public void setUdpateDate(Date udpateDate) {
-        this.udpateDate = udpateDate;
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
     }
 }

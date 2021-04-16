@@ -211,4 +211,8 @@
       update_date = #{updateDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="findAll" resultMap="BaseResultMap">
+    select * from site_zdb_pedaily_cn_invest_company
+  </select>
 </mapper>

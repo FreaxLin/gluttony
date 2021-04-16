@@ -10,11 +10,11 @@
     <result column="inv_company_url" jdbcType="VARCHAR" property="invCompanyUrl" />
     <result column="description_url" jdbcType="VARCHAR" property="descriptionUrl" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
-    <result column="udpate_date" jdbcType="TIMESTAMP" property="udpateDate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
   </resultMap>
   <sql id="Base_Column_List">
     id, inv_time, inv_company, inv_turn, inv_money, inv_company_url, description_url, 
-    create_date, udpate_date
+    create_date, update_date
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -26,11 +26,10 @@
     delete from site_zdb_inv_record
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="top.interc.gluttony.web.model.SiteZdbInvRecord" useGeneratedKeys="true" keyProperty="id">
-
+  <insert id="insert" parameterType="top.interc.gluttony.web.model.SiteZdbInvRecord">
     insert into site_zdb_inv_record (id, inv_time, inv_company, 
       inv_turn, inv_money, inv_company_url, 
-      description_url, create_date, udpate_date
+      description_url, create_date, update_date
       )
     values (#{id,jdbcType=INTEGER}, #{invTime,jdbcType=VARCHAR}, #{invCompany,jdbcType=VARCHAR}, 
       #{invTurn,jdbcType=VARCHAR}, #{invMoney,jdbcType=VARCHAR}, #{invCompanyUrl,jdbcType=VARCHAR}, 
@@ -66,8 +65,8 @@
       <if test="createDate != null">
         create_date,
       </if>
-      <if test="udpateDate != null">
-        udpate_date,
+      <if test="updateDate != null">
+        update_date,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -95,8 +94,8 @@
       <if test="createDate != null">
         #{createDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="udpateDate != null">
-        #{udpateDate,jdbcType=TIMESTAMP},
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -124,8 +123,8 @@
       <if test="createDate != null">
         create_date = #{createDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="udpateDate != null">
-        udpate_date = #{udpateDate,jdbcType=TIMESTAMP},
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -139,7 +138,7 @@
       inv_company_url = #{invCompanyUrl,jdbcType=VARCHAR},
       description_url = #{descriptionUrl,jdbcType=VARCHAR},
       create_date = #{createDate,jdbcType=TIMESTAMP},
-      udpate_date = #{udpateDate,jdbcType=TIMESTAMP}
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
