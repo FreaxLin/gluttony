@@ -1,7 +1,20 @@
 package top.interc.web;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.junit4.SpringRunner;
+import top.interc.gluttony.web.WebApplication;
+import top.interc.gluttony.web.mapper.SiteZdbPedailyCnMapper;
+import top.interc.gluttony.web.model.SiteZdbPedailyCn;
 
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,7 +25,12 @@ import java.util.regex.Pattern;
  * @modified By：
  * @version: 1.0
  */
+@Profile("local")
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = WebApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ParseTest {
+
+
 
     @Test
     public void test(){
@@ -23,5 +41,6 @@ public class ParseTest {
             System.out.println(matcher.group(0));
         }
     }
+
 
 }
