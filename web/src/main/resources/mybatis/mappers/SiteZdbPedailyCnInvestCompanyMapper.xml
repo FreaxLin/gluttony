@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.interc.gluttony.web.mapper.SiteZdbPedailyCnInvestCompanyMapper">
+  <resultMap id="BaseResultMap" type="top.interc.gluttony.web.model.SiteZdbPedailyCnInvestCompany">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="ch_name" jdbcType="VARCHAR" property="chName" />
+    <result column="en_name" jdbcType="VARCHAR" property="enName" />
+    <result column="founding_time" jdbcType="VARCHAR" property="foundingTime" />
+    <result column="official_website" jdbcType="VARCHAR" property="officialWebsite" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="contact_way" jdbcType="VARCHAR" property="contactWay" />
+    <result column="investment_type" jdbcType="VARCHAR" property="investmentType" />
+    <result column="head_quarter" jdbcType="VARCHAR" property="headQuarter" />
+    <result column="place_register" jdbcType="VARCHAR" property="placeRegister" />
+    <result column="investment_stage" jdbcType="VARCHAR" property="investmentStage" />
+    <result column="capital_type" jdbcType="VARCHAR" property="capitalType" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, code, ch_name, en_name, founding_time, official_website, description, contact_way, 
+    investment_type, head_quarter, place_register, investment_stage, capital_type, create_date, 
+    update_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from site_zdb_pedaily_cn_invest_company
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from site_zdb_pedaily_cn_invest_company
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="top.interc.gluttony.web.model.SiteZdbPedailyCnInvestCompany">
+    insert into site_zdb_pedaily_cn_invest_company (code, ch_name,
+      en_name, founding_time, official_website, 
+      description, contact_way, investment_type, 
+      head_quarter, place_register, investment_stage, 
+      capital_type, create_date, update_date
+      )
+    values (#{code,jdbcType=VARCHAR}, #{chName,jdbcType=VARCHAR},
+      #{enName,jdbcType=VARCHAR}, #{foundingTime,jdbcType=VARCHAR}, #{officialWebsite,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{contactWay,jdbcType=VARCHAR}, #{investmentType,jdbcType=VARCHAR}, 
+      #{headQuarter,jdbcType=VARCHAR}, #{placeRegister,jdbcType=VARCHAR}, #{investmentStage,jdbcType=VARCHAR}, 
+      #{capitalType,jdbcType=VARCHAR}, now(), now())
+      ON DUPLICATE KEY UPDATE
+      update_date = now()
+  </insert>
+  <insert id="insertSelective" parameterType="top.interc.gluttony.web.model.SiteZdbPedailyCnInvestCompany">
+    insert into site_zdb_pedaily_cn_invest_company
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="chName != null">
+        ch_name,
+      </if>
+      <if test="enName != null">
+        en_name,
+      </if>
+      <if test="foundingTime != null">
+        founding_time,
+      </if>
+      <if test="officialWebsite != null">
+        official_website,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="contactWay != null">
+        contact_way,
+      </if>
+      <if test="investmentType != null">
+        investment_type,
+      </if>
+      <if test="headQuarter != null">
+        head_quarter,
+      </if>
+      <if test="placeRegister != null">
+        place_register,
+      </if>
+      <if test="investmentStage != null">
+        investment_stage,
+      </if>
+      <if test="capitalType != null">
+        capital_type,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="chName != null">
+        #{chName,jdbcType=VARCHAR},
+      </if>
+      <if test="enName != null">
+        #{enName,jdbcType=VARCHAR},
+      </if>
+      <if test="foundingTime != null">
+        #{foundingTime,jdbcType=VARCHAR},
+      </if>
+      <if test="officialWebsite != null">
+        #{officialWebsite,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="contactWay != null">
+        #{contactWay,jdbcType=VARCHAR},
+      </if>
+      <if test="investmentType != null">
+        #{investmentType,jdbcType=VARCHAR},
+      </if>
+      <if test="headQuarter != null">
+        #{headQuarter,jdbcType=VARCHAR},
+      </if>
+      <if test="placeRegister != null">
+        #{placeRegister,jdbcType=VARCHAR},
+      </if>
+      <if test="investmentStage != null">
+        #{investmentStage,jdbcType=VARCHAR},
+      </if>
+      <if test="capitalType != null">
+        #{capitalType,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="top.interc.gluttony.web.model.SiteZdbPedailyCnInvestCompany">
+    update site_zdb_pedaily_cn_invest_company
+    <set>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="chName != null">
+        ch_name = #{chName,jdbcType=VARCHAR},
+      </if>
+      <if test="enName != null">
+        en_name = #{enName,jdbcType=VARCHAR},
+      </if>
+      <if test="foundingTime != null">
+        founding_time = #{foundingTime,jdbcType=VARCHAR},
+      </if>
+      <if test="officialWebsite != null">
+        official_website = #{officialWebsite,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="contactWay != null">
+        contact_way = #{contactWay,jdbcType=VARCHAR},
+      </if>
+      <if test="investmentType != null">
+        investment_type = #{investmentType,jdbcType=VARCHAR},
+      </if>
+      <if test="headQuarter != null">
+        head_quarter = #{headQuarter,jdbcType=VARCHAR},
+      </if>
+      <if test="placeRegister != null">
+        place_register = #{placeRegister,jdbcType=VARCHAR},
+      </if>
+      <if test="investmentStage != null">
+        investment_stage = #{investmentStage,jdbcType=VARCHAR},
+      </if>
+      <if test="capitalType != null">
+        capital_type = #{capitalType,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="top.interc.gluttony.web.model.SiteZdbPedailyCnInvestCompany">
+    update site_zdb_pedaily_cn_invest_company
+    set code = #{code,jdbcType=VARCHAR},
+      ch_name = #{chName,jdbcType=VARCHAR},
+      en_name = #{enName,jdbcType=VARCHAR},
+      founding_time = #{foundingTime,jdbcType=VARCHAR},
+      official_website = #{officialWebsite,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      contact_way = #{contactWay,jdbcType=VARCHAR},
+      investment_type = #{investmentType,jdbcType=VARCHAR},
+      head_quarter = #{headQuarter,jdbcType=VARCHAR},
+      place_register = #{placeRegister,jdbcType=VARCHAR},
+      investment_stage = #{investmentStage,jdbcType=VARCHAR},
+      capital_type = #{capitalType,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

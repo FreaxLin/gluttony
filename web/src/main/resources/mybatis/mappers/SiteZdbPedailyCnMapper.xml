@@ -79,4 +79,13 @@
       company = #{company,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from site_zdb_pedaily_cn
+    <where>
+      <if test="id != null">
+        id = #{id}
+      </if>
+    </where>
+  </select>
 </mapper>
