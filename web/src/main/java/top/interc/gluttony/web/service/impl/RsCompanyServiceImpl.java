@@ -9,7 +9,11 @@ import top.interc.gluttony.web.util.HttpClient;
 import top.interc.gluttony.web.util.HttpResult;
 import top.interc.gluttony.web.util.JsonMapper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author ：linweisen
@@ -34,10 +38,18 @@ public class RsCompanyServiceImpl implements RsCompanyService {
             company.setCode(code);
             rsCompanyMapper.insertSelective(company);
         }
-        HttpResult result = HttpClient.get(String.format("url", code), null);
-        Map map = JsonMapper.getInstance().fromJson(result.getBody(), Map.class);
+        HttpResult result = HttpClient.get(String.format(url, code), null);
+        Pattern pattern = Pattern.compile("(?<=\\()[^\\)]+");
+        Matcher matcher = pattern.matcher(result.getBody());
 
+        while (matcher.find()) {
+            Map map = JsonMapper.getInstance().fromJson(matcher.group(0), Map.class);
+            List<Map<String, Object>> profitsData = (List<Map<String, Object>>) map.get("profitsData");
+            for (Map<String, Object> data : profitsData){
 
+            }
+            break;
+        }
         return false;
     }
 }
