@@ -22,7 +22,7 @@
     delete from site_zdb_inv_group
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="top.interc.gluttony.web.model.SiteZdbInvGroup">
+  <insert id="insert" parameterType="top.interc.gluttony.web.model.SiteZdbInvGroup" useGeneratedKeys="true" keyProperty="id">
     insert into site_zdb_inv_group (inv_record_id, inv_group_name,
       inv_group_show_url, create_date, update_date
       )

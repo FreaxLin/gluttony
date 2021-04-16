@@ -48,45 +48,52 @@ public class ZdbPedailyCnInvCrawlTask {
         for (int i = 0; i < investCompanyList.size(); i++){
             SiteZdbPedailyCnInvestCompany company = investCompanyList.get(i);
             String url = "https://zdb.pedaily.cn/inv/v%s-p%s";
-            try {
-//                Thread.sleep(2000);
+
+
                 int index = 1;
-                Document document = Jsoup.connect(String.format(url, company.getCode(), index)).get();
-                while (document != null){
-                    Element inv = document.select("ul#inv-list").get(0);
-                    Elements invList = inv.getElementsByTag("li");
-                    for (Element e : invList){
-                        SiteZdbInvRecord record = new SiteZdbInvRecord();
-                        record.setInvCompanyUrl(e.select("div.top").get(0).getElementsByTag("a").attr("href"));
-                        record.setInvCompany(e.select("div.top").get(0).getElementsByTag("a").text());
-
-                        record.setInvTurn(e.select("div.info").get(0).getElementsByTag("span").get(0).text());
-                        record.setInvMoney(e.select("div.info").get(0).getElementsByTag("span").get(1).text());
-                        Elements invcList = e.select("div.group").get(0).getElementsByTag("a");
-                        List<SiteZdbInvGroup> groupList = new ArrayList<>();
-                        for (Element invc : invcList){
-                            SiteZdbInvGroup group = new SiteZdbInvGroup();
-                            group.setInvGroupShowUrl(invc.attr("href"));
-                            group.setInvGroupName(invc.text());
-                            groupList.add(group);
+                Document document= null;
+                do{
+                    try {
+                        Thread.sleep(2000);
+                        System.out.println(String.format(url, company.getCode(), index));
+                        document = Jsoup.connect(String.format(url, company.getCode(), index)).get();
+                        Element inv = document.select("ul#inv-list").get(0);
+                        Elements invList = inv.getElementsByTag("li");
+                        if (invList.size() == 0){
+                            break;
                         }
-                        record.setInvTime(e.select("div.date").text());
-                        record.setDescriptionUrl(e.select("div.view").get(0).getElementsByTag("a").get(0).attr("href"));
-                        recordMapper.insert(record);
-                        for (SiteZdbInvGroup group : groupList) {
-                            group.setInvRecordId(record.getId());
-                            groupMapper.insert(group);
+                        for (Element e : invList){
+                            SiteZdbInvRecord record = new SiteZdbInvRecord();
+                            record.setInvCompanyUrl(e.select("div.top").get(0).getElementsByTag("a").attr("href"));
+                            record.setInvCompany(e.select("div.top").get(0).getElementsByTag("a").text());
+
+                            record.setInvTurn(e.select("div.info").get(0).getElementsByTag("span").get(0).text());
+                            record.setInvMoney(e.select("div.info").get(0).getElementsByTag("span").get(1).text());
+                            Elements invcList = e.select("div.group").get(0).getElementsByTag("a");
+                            List<SiteZdbInvGroup> groupList = new ArrayList<>();
+                            for (Element invc : invcList){
+                                SiteZdbInvGroup group = new SiteZdbInvGroup();
+                                group.setInvGroupShowUrl(invc.attr("href"));
+                                group.setInvGroupName(invc.text());
+                                groupList.add(group);
+                            }
+                            record.setInvTime(e.select("div.date").text());
+                            record.setDescriptionUrl(e.select("div.view").get(0).getElementsByTag("a").get(0).attr("href"));
+                            recordMapper.insert(record);
+                            for (SiteZdbInvGroup group : groupList) {
+                                group.setInvRecordId(record.getId());
+                                groupMapper.insert(group);
+                            }
+
                         }
 
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                     index++;
-                    document = Jsoup.connect(String.format(url, company.getCode(), index)).get();
+                }while (document != null);
 
-                }
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
 
     }
