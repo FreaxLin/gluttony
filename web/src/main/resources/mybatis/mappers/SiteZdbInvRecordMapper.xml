@@ -36,7 +36,9 @@
       #{descriptionUrl,jdbcType=VARCHAR}, now(), now()
       )
       ON DUPLICATE KEY UPDATE
-      update_date = now()
+      update_date = now(),
+      inv_money = values(inv_money),
+      inv_turn = values(inv_turn)
   </insert>
   <insert id="insertSelective" parameterType="top.interc.gluttony.web.model.SiteZdbInvRecord">
     insert into site_zdb_inv_record

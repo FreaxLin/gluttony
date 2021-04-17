@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.interc.gluttony.web.mapper.RsListedCompanyDetailMapper">
+  <resultMap id="BaseResultMap" type="top.interc.gluttony.web.model.RsListedCompanyDetail">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="ename" jdbcType="VARCHAR" property="ename" />
+    <result column="market" jdbcType="VARCHAR" property="market" />
+    <result column="ldate" jdbcType="VARCHAR" property="ldate" />
+    <result column="sprice" jdbcType="VARCHAR" property="sprice" />
+    <result column="principal" jdbcType="VARCHAR" property="principal" />
+    <result column="rdate" jdbcType="VARCHAR" property="rdate" />
+    <result column="rprice" jdbcType="VARCHAR" property="rprice" />
+    <result column="instype" jdbcType="VARCHAR" property="instype" />
+    <result column="organ" jdbcType="VARCHAR" property="organ" />
+    <result column="secre" jdbcType="VARCHAR" property="secre" />
+    <result column="new_tablecol" jdbcType="VARCHAR" property="newTablecol" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="sphone" jdbcType="VARCHAR" property="sphone" />
+    <result column="fax" jdbcType="VARCHAR" property="fax" />
+    <result column="sfax" jdbcType="VARCHAR" property="sfax" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="semail" jdbcType="VARCHAR" property="semail" />
+    <result column="site" jdbcType="VARCHAR" property="site" />
+    <result column="post" jdbcType="VARCHAR" property="post" />
+    <result column="infosite" jdbcType="VARCHAR" property="infosite" />
+    <result column="oname" jdbcType="VARCHAR" property="oname" />
+    <result column="addr" jdbcType="VARCHAR" property="addr" />
+    <result column="oaddr" jdbcType="VARCHAR" property="oaddr" />
+    <result column="desc" jdbcType="VARCHAR" property="desc" />
+    <result column="bscope" jdbcType="VARCHAR" property="bscope" />
+    <result column="idea" jdbcType="VARCHAR" property="idea" />
+    <result column="printype" jdbcType="VARCHAR" property="printype" />
+    <result column="referrer" jdbcType="VARCHAR" property="referrer" />
+    <result column="putype" jdbcType="VARCHAR" property="putype" />
+    <result column="pe" jdbcType="VARCHAR" property="pe" />
+    <result column="firgu" jdbcType="VARCHAR" property="firgu" />
+    <result column="lastgu" jdbcType="VARCHAR" property="lastgu" />
+    <result column="realgu" jdbcType="VARCHAR" property="realgu" />
+    <result column="planm" jdbcType="VARCHAR" property="planm" />
+    <result column="realm" jdbcType="VARCHAR" property="realm" />
+    <result column="pubfee" jdbcType="VARCHAR" property="pubfee" />
+    <result column="collect" jdbcType="VARCHAR" property="collect" />
+    <result column="signfee" jdbcType="VARCHAR" property="signfee" />
+    <result column="pdate" jdbcType="VARCHAR" property="pdate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, code, name, ename, market, ldate, sprice, principal, rdate, rprice, instype, 
+    organ, secre, new_tablecol, phone, sphone, fax, sfax, email, semail, site, post, 
+    infosite, oname, addr, oaddr, desc, bscope, idea, printype, referrer, putype, pe, 
+    firgu, lastgu, realgu, planm, realm, pubfee, collect, signfee, pdate, update_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rs_listed_company_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from rs_listed_company_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="top.interc.gluttony.web.model.RsListedCompanyDetail">
+    insert into rs_listed_company_detail (code, `name`,
+      ename, market, ldate, 
+      sprice, principal, rdate, 
+      rprice, instype, organ, 
+      secre, new_tablecol, phone, 
+      sphone, fax, sfax, 
+      email, semail, site, 
+      post, infosite, oname, 
+      addr, oaddr, `desc`,
+      bscope, idea, printype, 
+      referrer, putype, pe, 
+      firgu, lastgu, realgu, 
+      planm, realm, pubfee, 
+      collect, signfee, pdate, 
+      update_date)
+    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+      #{ename,jdbcType=VARCHAR}, #{market,jdbcType=VARCHAR}, #{ldate,jdbcType=VARCHAR}, 
+      #{sprice,jdbcType=VARCHAR}, #{principal,jdbcType=VARCHAR}, #{rdate,jdbcType=VARCHAR}, 
+      #{rprice,jdbcType=VARCHAR}, #{instype,jdbcType=VARCHAR}, #{organ,jdbcType=VARCHAR}, 
+      #{secre,jdbcType=VARCHAR}, #{newTablecol,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{sphone,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, #{sfax,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{semail,jdbcType=VARCHAR}, #{site,jdbcType=VARCHAR}, 
+      #{post,jdbcType=VARCHAR}, #{infosite,jdbcType=VARCHAR}, #{oname,jdbcType=VARCHAR}, 
+      #{addr,jdbcType=VARCHAR}, #{oaddr,jdbcType=VARCHAR}, #{desc,jdbcType=VARCHAR}, 
+      #{bscope,jdbcType=VARCHAR}, #{idea,jdbcType=VARCHAR}, #{printype,jdbcType=VARCHAR}, 
+      #{referrer,jdbcType=VARCHAR}, #{putype,jdbcType=VARCHAR}, #{pe,jdbcType=VARCHAR}, 
+      #{firgu,jdbcType=VARCHAR}, #{lastgu,jdbcType=VARCHAR}, #{realgu,jdbcType=VARCHAR}, 
+      #{planm,jdbcType=VARCHAR}, #{realm,jdbcType=VARCHAR}, #{pubfee,jdbcType=VARCHAR}, 
+      #{collect,jdbcType=VARCHAR}, #{signfee,jdbcType=VARCHAR}, #{pdate,jdbcType=VARCHAR}, 
+      now())
+      ON DUPLICATE KEY UPDATE
+      update_date = now()
+  </insert>
+  <insert id="insertSelective" parameterType="top.interc.gluttony.web.model.RsListedCompanyDetail">
+    insert into rs_listed_company_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="ename != null">
+        ename,
+      </if>
+      <if test="market != null">
+        market,
+      </if>
+      <if test="ldate != null">
+        ldate,
+      </if>
+      <if test="sprice != null">
+        sprice,
+      </if>
+      <if test="principal != null">
+        principal,
+      </if>
+      <if test="rdate != null">
+        rdate,
+      </if>
+      <if test="rprice != null">
+        rprice,
+      </if>
+      <if test="instype != null">
+        instype,
+      </if>
+      <if test="organ != null">
+        organ,
+      </if>
+      <if test="secre != null">
+        secre,
+      </if>
+      <if test="newTablecol != null">
+        new_tablecol,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="sphone != null">
+        sphone,
+      </if>
+      <if test="fax != null">
+        fax,
+      </if>
+      <if test="sfax != null">
+        sfax,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="semail != null">
+        semail,
+      </if>
+      <if test="site != null">
+        site,
+      </if>
+      <if test="post != null">
+        post,
+      </if>
+      <if test="infosite != null">
+        infosite,
+      </if>
+      <if test="oname != null">
+        oname,
+      </if>
+      <if test="addr != null">
+        addr,
+      </if>
+      <if test="oaddr != null">
+        oaddr,
+      </if>
+      <if test="desc != null">
+        desc,
+      </if>
+      <if test="bscope != null">
+        bscope,
+      </if>
+      <if test="idea != null">
+        idea,
+      </if>
+      <if test="printype != null">
+        printype,
+      </if>
+      <if test="referrer != null">
+        referrer,
+      </if>
+      <if test="putype != null">
+        putype,
+      </if>
+      <if test="pe != null">
+        pe,
+      </if>
+      <if test="firgu != null">
+        firgu,
+      </if>
+      <if test="lastgu != null">
+        lastgu,
+      </if>
+      <if test="realgu != null">
+        realgu,
+      </if>
+      <if test="planm != null">
+        planm,
+      </if>
+      <if test="realm != null">
+        realm,
+      </if>
+      <if test="pubfee != null">
+        pubfee,
+      </if>
+      <if test="collect != null">
+        collect,
+      </if>
+      <if test="signfee != null">
+        signfee,
+      </if>
+      <if test="pdate != null">
+        pdate,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="ename != null">
+        #{ename,jdbcType=VARCHAR},
+      </if>
+      <if test="market != null">
+        #{market,jdbcType=VARCHAR},
+      </if>
+      <if test="ldate != null">
+        #{ldate,jdbcType=VARCHAR},
+      </if>
+      <if test="sprice != null">
+        #{sprice,jdbcType=VARCHAR},
+      </if>
+      <if test="principal != null">
+        #{principal,jdbcType=VARCHAR},
+      </if>
+      <if test="rdate != null">
+        #{rdate,jdbcType=VARCHAR},
+      </if>
+      <if test="rprice != null">
+        #{rprice,jdbcType=VARCHAR},
+      </if>
+      <if test="instype != null">
+        #{instype,jdbcType=VARCHAR},
+      </if>
+      <if test="organ != null">
+        #{organ,jdbcType=VARCHAR},
+      </if>
+      <if test="secre != null">
+        #{secre,jdbcType=VARCHAR},
+      </if>
+      <if test="newTablecol != null">
+        #{newTablecol,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="sphone != null">
+        #{sphone,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null">
+        #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="sfax != null">
+        #{sfax,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="semail != null">
+        #{semail,jdbcType=VARCHAR},
+      </if>
+      <if test="site != null">
+        #{site,jdbcType=VARCHAR},
+      </if>
+      <if test="post != null">
+        #{post,jdbcType=VARCHAR},
+      </if>
+      <if test="infosite != null">
+        #{infosite,jdbcType=VARCHAR},
+      </if>
+      <if test="oname != null">
+        #{oname,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null">
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="oaddr != null">
+        #{oaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="desc != null">
+        #{desc,jdbcType=VARCHAR},
+      </if>
+      <if test="bscope != null">
+        #{bscope,jdbcType=VARCHAR},
+      </if>
+      <if test="idea != null">
+        #{idea,jdbcType=VARCHAR},
+      </if>
+      <if test="printype != null">
+        #{printype,jdbcType=VARCHAR},
+      </if>
+      <if test="referrer != null">
+        #{referrer,jdbcType=VARCHAR},
+      </if>
+      <if test="putype != null">
+        #{putype,jdbcType=VARCHAR},
+      </if>
+      <if test="pe != null">
+        #{pe,jdbcType=VARCHAR},
+      </if>
+      <if test="firgu != null">
+        #{firgu,jdbcType=VARCHAR},
+      </if>
+      <if test="lastgu != null">
+        #{lastgu,jdbcType=VARCHAR},
+      </if>
+      <if test="realgu != null">
+        #{realgu,jdbcType=VARCHAR},
+      </if>
+      <if test="planm != null">
+        #{planm,jdbcType=VARCHAR},
+      </if>
+      <if test="realm != null">
+        #{realm,jdbcType=VARCHAR},
+      </if>
+      <if test="pubfee != null">
+        #{pubfee,jdbcType=VARCHAR},
+      </if>
+      <if test="collect != null">
+        #{collect,jdbcType=VARCHAR},
+      </if>
+      <if test="signfee != null">
+        #{signfee,jdbcType=VARCHAR},
+      </if>
+      <if test="pdate != null">
+        #{pdate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="top.interc.gluttony.web.model.RsListedCompanyDetail">
+    update rs_listed_company_detail
+    <set>
+      <if test="code != null">
+        code = #{code,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="ename != null">
+        ename = #{ename,jdbcType=VARCHAR},
+      </if>
+      <if test="market != null">
+        market = #{market,jdbcType=VARCHAR},
+      </if>
+      <if test="ldate != null">
+        ldate = #{ldate,jdbcType=VARCHAR},
+      </if>
+      <if test="sprice != null">
+        sprice = #{sprice,jdbcType=VARCHAR},
+      </if>
+      <if test="principal != null">
+        principal = #{principal,jdbcType=VARCHAR},
+      </if>
+      <if test="rdate != null">
+        rdate = #{rdate,jdbcType=VARCHAR},
+      </if>
+      <if test="rprice != null">
+        rprice = #{rprice,jdbcType=VARCHAR},
+      </if>
+      <if test="instype != null">
+        instype = #{instype,jdbcType=VARCHAR},
+      </if>
+      <if test="organ != null">
+        organ = #{organ,jdbcType=VARCHAR},
+      </if>
+      <if test="secre != null">
+        secre = #{secre,jdbcType=VARCHAR},
+      </if>
+      <if test="newTablecol != null">
+        new_tablecol = #{newTablecol,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="sphone != null">
+        sphone = #{sphone,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null">
+        fax = #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="sfax != null">
+        sfax = #{sfax,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="semail != null">
+        semail = #{semail,jdbcType=VARCHAR},
+      </if>
+      <if test="site != null">
+        site = #{site,jdbcType=VARCHAR},
+      </if>
+      <if test="post != null">
+        post = #{post,jdbcType=VARCHAR},
+      </if>
+      <if test="infosite != null">
+        infosite = #{infosite,jdbcType=VARCHAR},
+      </if>
+      <if test="oname != null">
+        oname = #{oname,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null">
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="oaddr != null">
+        oaddr = #{oaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="desc != null">
+        desc = #{desc,jdbcType=VARCHAR},
+      </if>
+      <if test="bscope != null">
+        bscope = #{bscope,jdbcType=VARCHAR},
+      </if>
+      <if test="idea != null">
+        idea = #{idea,jdbcType=VARCHAR},
+      </if>
+      <if test="printype != null">
+        printype = #{printype,jdbcType=VARCHAR},
+      </if>
+      <if test="referrer != null">
+        referrer = #{referrer,jdbcType=VARCHAR},
+      </if>
+      <if test="putype != null">
+        putype = #{putype,jdbcType=VARCHAR},
+      </if>
+      <if test="pe != null">
+        pe = #{pe,jdbcType=VARCHAR},
+      </if>
+      <if test="firgu != null">
+        firgu = #{firgu,jdbcType=VARCHAR},
+      </if>
+      <if test="lastgu != null">
+        lastgu = #{lastgu,jdbcType=VARCHAR},
+      </if>
+      <if test="realgu != null">
+        realgu = #{realgu,jdbcType=VARCHAR},
+      </if>
+      <if test="planm != null">
+        planm = #{planm,jdbcType=VARCHAR},
+      </if>
+      <if test="realm != null">
+        realm = #{realm,jdbcType=VARCHAR},
+      </if>
+      <if test="pubfee != null">
+        pubfee = #{pubfee,jdbcType=VARCHAR},
+      </if>
+      <if test="collect != null">
+        collect = #{collect,jdbcType=VARCHAR},
+      </if>
+      <if test="signfee != null">
+        signfee = #{signfee,jdbcType=VARCHAR},
+      </if>
+      <if test="pdate != null">
+        pdate = #{pdate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="top.interc.gluttony.web.model.RsListedCompanyDetail">
+    update rs_listed_company_detail
+    set code = #{code,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      ename = #{ename,jdbcType=VARCHAR},
+      market = #{market,jdbcType=VARCHAR},
+      ldate = #{ldate,jdbcType=VARCHAR},
+      sprice = #{sprice,jdbcType=VARCHAR},
+      principal = #{principal,jdbcType=VARCHAR},
+      rdate = #{rdate,jdbcType=VARCHAR},
+      rprice = #{rprice,jdbcType=VARCHAR},
+      instype = #{instype,jdbcType=VARCHAR},
+      organ = #{organ,jdbcType=VARCHAR},
+      secre = #{secre,jdbcType=VARCHAR},
+      new_tablecol = #{newTablecol,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      sphone = #{sphone,jdbcType=VARCHAR},
+      fax = #{fax,jdbcType=VARCHAR},
+      sfax = #{sfax,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      semail = #{semail,jdbcType=VARCHAR},
+      site = #{site,jdbcType=VARCHAR},
+      post = #{post,jdbcType=VARCHAR},
+      infosite = #{infosite,jdbcType=VARCHAR},
+      oname = #{oname,jdbcType=VARCHAR},
+      addr = #{addr,jdbcType=VARCHAR},
+      oaddr = #{oaddr,jdbcType=VARCHAR},
+      desc = #{desc,jdbcType=VARCHAR},
+      bscope = #{bscope,jdbcType=VARCHAR},
+      idea = #{idea,jdbcType=VARCHAR},
+      printype = #{printype,jdbcType=VARCHAR},
+      referrer = #{referrer,jdbcType=VARCHAR},
+      putype = #{putype,jdbcType=VARCHAR},
+      pe = #{pe,jdbcType=VARCHAR},
+      firgu = #{firgu,jdbcType=VARCHAR},
+      lastgu = #{lastgu,jdbcType=VARCHAR},
+      realgu = #{realgu,jdbcType=VARCHAR},
+      planm = #{planm,jdbcType=VARCHAR},
+      realm = #{realm,jdbcType=VARCHAR},
+      pubfee = #{pubfee,jdbcType=VARCHAR},
+      collect = #{collect,jdbcType=VARCHAR},
+      signfee = #{signfee,jdbcType=VARCHAR},
+      pdate = #{pdate,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
